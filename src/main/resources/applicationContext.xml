@@ -5,13 +5,13 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xml
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
        http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx.xml
+       http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.2.xsd
 ">
     <!-- 扫描业务逻辑组件 -->
     <context:component-scan base-package="online.wenmeng">
@@ -31,6 +31,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 指定mybatis全局配置文件的位置 -->
         <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <!-- 指定数据库 -->
         <property name="dataSource" ref="pooledDataSource"/>
         <!-- 指定mybatis,mapper文件的位置 -->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
