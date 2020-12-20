@@ -1,7 +1,7 @@
 package online.wenmeng.service;
 
-import online.wenmeng.bean.c_user;
-import online.wenmeng.dao.c_userMapper;
+import online.wenmeng.bean.ulogin;
+import online.wenmeng.dao.uloginMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Service;
 public class UserServices {
 
     @Autowired
-    private c_userMapper userMapper;
+    private uloginMapper userMapper;
 
     public String getUser(int id) {
-        c_user c_user = userMapper.selectByPrimaryKey(id);
-        if (c_user!=null)
-            return c_user.toString();
+        ulogin ulogin = userMapper.selectByPrimaryKey(1);
+        if (ulogin!=null)
+            return ulogin.toString();
         return null;
     }
 }

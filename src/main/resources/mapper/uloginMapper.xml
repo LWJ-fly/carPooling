@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="online.wenmeng.dao.c_userinfoMapper">
-  <resultMap id="BaseResultMap" type="online.wenmeng.bean.c_userinfo">
+<mapper namespace="online.wenmeng.dao.uloginMapper">
+  <resultMap id="BaseResultMap" type="online.wenmeng.bean.ulogin">
     <id column="userID" jdbcType="INTEGER" property="userid" />
-    <result column="userPhone" jdbcType="INTEGER" property="userphone" />
-    <result column="userEmail" jdbcType="VARCHAR" property="useremail" />
+    <result column="qqLogin" jdbcType="INTEGER" property="qqlogin" />
+    <result column="wxLogin" jdbcType="VARCHAR" property="wxlogin" />
+    <result column="zfbLogin" jdbcType="VARCHAR" property="zfblogin" />
+    <result column="tbLogin" jdbcType="VARCHAR" property="tblogin" />
+    <result column="zhLogin" jdbcType="VARCHAR" property="zhlogin" />
+    <result column="zhPwd" jdbcType="VARCHAR" property="zhpwd" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,15 +69,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    userID, userPhone, userEmail
+    userID, qqLogin, wxLogin, zfbLogin, tbLogin, zhLogin, zhPwd
   </sql>
-  <select id="selectByExample" parameterType="online.wenmeng.bean.c_userinfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="online.wenmeng.bean.uloginExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from c_userinfo
+    from ulogin
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,67 +88,105 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from c_userinfo
+    from ulogin
     where userID = #{userid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from c_userinfo
+    delete from ulogin
     where userID = #{userid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="online.wenmeng.bean.c_userinfoExample">
-    delete from c_userinfo
+  <delete id="deleteByExample" parameterType="online.wenmeng.bean.uloginExample">
+    delete from ulogin
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="online.wenmeng.bean.c_userinfo">
-    insert into c_userinfo (userID, userPhone, userEmail
-      )
-    values (#{userid,jdbcType=INTEGER}, #{userphone,jdbcType=INTEGER}, #{useremail,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="online.wenmeng.bean.ulogin">
+    insert into ulogin (userID, qqLogin, wxLogin, 
+      zfbLogin, tbLogin, zhLogin, 
+      zhPwd)
+    values (#{userid,jdbcType=INTEGER}, #{qqlogin,jdbcType=INTEGER}, #{wxlogin,jdbcType=VARCHAR}, 
+      #{zfblogin,jdbcType=VARCHAR}, #{tblogin,jdbcType=VARCHAR}, #{zhlogin,jdbcType=VARCHAR}, 
+      #{zhpwd,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="online.wenmeng.bean.c_userinfo">
-    insert into c_userinfo
+  <insert id="insertSelective" parameterType="online.wenmeng.bean.ulogin">
+    insert into ulogin
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userid != null">
         userID,
       </if>
-      <if test="userphone != null">
-        userPhone,
+      <if test="qqlogin != null">
+        qqLogin,
       </if>
-      <if test="useremail != null">
-        userEmail,
+      <if test="wxlogin != null">
+        wxLogin,
+      </if>
+      <if test="zfblogin != null">
+        zfbLogin,
+      </if>
+      <if test="tblogin != null">
+        tbLogin,
+      </if>
+      <if test="zhlogin != null">
+        zhLogin,
+      </if>
+      <if test="zhpwd != null">
+        zhPwd,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userid != null">
         #{userid,jdbcType=INTEGER},
       </if>
-      <if test="userphone != null">
-        #{userphone,jdbcType=INTEGER},
+      <if test="qqlogin != null">
+        #{qqlogin,jdbcType=INTEGER},
       </if>
-      <if test="useremail != null">
-        #{useremail,jdbcType=VARCHAR},
+      <if test="wxlogin != null">
+        #{wxlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="zfblogin != null">
+        #{zfblogin,jdbcType=VARCHAR},
+      </if>
+      <if test="tblogin != null">
+        #{tblogin,jdbcType=VARCHAR},
+      </if>
+      <if test="zhlogin != null">
+        #{zhlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="zhpwd != null">
+        #{zhpwd,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="online.wenmeng.bean.c_userinfoExample" resultType="java.lang.Long">
-    select count(*) from c_userinfo
+  <select id="countByExample" parameterType="online.wenmeng.bean.uloginExample" resultType="java.lang.Long">
+    select count(*) from ulogin
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update c_userinfo
+    update ulogin
     <set>
       <if test="record.userid != null">
         userID = #{record.userid,jdbcType=INTEGER},
       </if>
-      <if test="record.userphone != null">
-        userPhone = #{record.userphone,jdbcType=INTEGER},
+      <if test="record.qqlogin != null">
+        qqLogin = #{record.qqlogin,jdbcType=INTEGER},
       </if>
-      <if test="record.useremail != null">
-        userEmail = #{record.useremail,jdbcType=VARCHAR},
+      <if test="record.wxlogin != null">
+        wxLogin = #{record.wxlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zfblogin != null">
+        zfbLogin = #{record.zfblogin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tblogin != null">
+        tbLogin = #{record.tblogin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhlogin != null">
+        zhLogin = #{record.zhlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhpwd != null">
+        zhPwd = #{record.zhpwd,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -152,30 +194,50 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update c_userinfo
+    update ulogin
     set userID = #{record.userid,jdbcType=INTEGER},
-      userPhone = #{record.userphone,jdbcType=INTEGER},
-      userEmail = #{record.useremail,jdbcType=VARCHAR}
+      qqLogin = #{record.qqlogin,jdbcType=INTEGER},
+      wxLogin = #{record.wxlogin,jdbcType=VARCHAR},
+      zfbLogin = #{record.zfblogin,jdbcType=VARCHAR},
+      tbLogin = #{record.tblogin,jdbcType=VARCHAR},
+      zhLogin = #{record.zhlogin,jdbcType=VARCHAR},
+      zhPwd = #{record.zhpwd,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="online.wenmeng.bean.c_userinfo">
-    update c_userinfo
+  <update id="updateByPrimaryKeySelective" parameterType="online.wenmeng.bean.ulogin">
+    update ulogin
     <set>
-      <if test="userphone != null">
-        userPhone = #{userphone,jdbcType=INTEGER},
+      <if test="qqlogin != null">
+        qqLogin = #{qqlogin,jdbcType=INTEGER},
       </if>
-      <if test="useremail != null">
-        userEmail = #{useremail,jdbcType=VARCHAR},
+      <if test="wxlogin != null">
+        wxLogin = #{wxlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="zfblogin != null">
+        zfbLogin = #{zfblogin,jdbcType=VARCHAR},
+      </if>
+      <if test="tblogin != null">
+        tbLogin = #{tblogin,jdbcType=VARCHAR},
+      </if>
+      <if test="zhlogin != null">
+        zhLogin = #{zhlogin,jdbcType=VARCHAR},
+      </if>
+      <if test="zhpwd != null">
+        zhPwd = #{zhpwd,jdbcType=VARCHAR},
       </if>
     </set>
     where userID = #{userid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="online.wenmeng.bean.c_userinfo">
-    update c_userinfo
-    set userPhone = #{userphone,jdbcType=INTEGER},
-      userEmail = #{useremail,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="online.wenmeng.bean.ulogin">
+    update ulogin
+    set qqLogin = #{qqlogin,jdbcType=INTEGER},
+      wxLogin = #{wxlogin,jdbcType=VARCHAR},
+      zfbLogin = #{zfblogin,jdbcType=VARCHAR},
+      tbLogin = #{tblogin,jdbcType=VARCHAR},
+      zhLogin = #{zhlogin,jdbcType=VARCHAR},
+      zhPwd = #{zhpwd,jdbcType=VARCHAR}
     where userID = #{userid,jdbcType=INTEGER}
   </update>
 </mapper>

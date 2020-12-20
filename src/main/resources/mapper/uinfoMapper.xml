@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.wenmeng.dao.uinfoMapper">
+  <resultMap id="BaseResultMap" type="online.wenmeng.bean.uinfo">
+    <id column="userID" jdbcType="INTEGER" property="userid" />
+    <result column="QQNum" jdbcType="VARCHAR" property="qqnum" />
+    <result column="WXNum" jdbcType="VARCHAR" property="wxnum" />
+    <result column="phoneNum" jdbcType="VARCHAR" property="phonenum" />
+    <result column="tallMail" jdbcType="VARCHAR" property="tallmail" />
+    <result column="URealName" jdbcType="VARCHAR" property="urealname" />
+    <result column="UNickname" jdbcType="VARCHAR" property="unickname" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="outInfo" jdbcType="INTEGER" property="outinfo" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="UWallet" jdbcType="DOUBLE" property="uwallet" />
+    <result column="UCredibility" jdbcType="INTEGER" property="ucredibility" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    userID, QQNum, WXNum, phoneNum, tallMail, URealName, UNickname, sex, outInfo, signature, 
+    UWallet, UCredibility
+  </sql>
+  <select id="selectByExample" parameterType="online.wenmeng.bean.uinfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from uinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from uinfo
+    where userID = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from uinfo
+    where userID = #{userid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="online.wenmeng.bean.uinfoExample">
+    delete from uinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="online.wenmeng.bean.uinfo">
+    insert into uinfo (userID, QQNum, WXNum, 
+      phoneNum, tallMail, URealName, 
+      UNickname, sex, outInfo, 
+      signature, UWallet, UCredibility
+      )
+    values (#{userid,jdbcType=INTEGER}, #{qqnum,jdbcType=VARCHAR}, #{wxnum,jdbcType=VARCHAR}, 
+      #{phonenum,jdbcType=VARCHAR}, #{tallmail,jdbcType=VARCHAR}, #{urealname,jdbcType=VARCHAR}, 
+      #{unickname,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{outinfo,jdbcType=INTEGER}, 
+      #{signature,jdbcType=VARCHAR}, #{uwallet,jdbcType=DOUBLE}, #{ucredibility,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="online.wenmeng.bean.uinfo">
+    insert into uinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="qqnum != null">
+        QQNum,
+      </if>
+      <if test="wxnum != null">
+        WXNum,
+      </if>
+      <if test="phonenum != null">
+        phoneNum,
+      </if>
+      <if test="tallmail != null">
+        tallMail,
+      </if>
+      <if test="urealname != null">
+        URealName,
+      </if>
+      <if test="unickname != null">
+        UNickname,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="outinfo != null">
+        outInfo,
+      </if>
+      <if test="signature != null">
+        signature,
+      </if>
+      <if test="uwallet != null">
+        UWallet,
+      </if>
+      <if test="ucredibility != null">
+        UCredibility,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="qqnum != null">
+        #{qqnum,jdbcType=VARCHAR},
+      </if>
+      <if test="wxnum != null">
+        #{wxnum,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null">
+        #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tallmail != null">
+        #{tallmail,jdbcType=VARCHAR},
+      </if>
+      <if test="urealname != null">
+        #{urealname,jdbcType=VARCHAR},
+      </if>
+      <if test="unickname != null">
+        #{unickname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="outinfo != null">
+        #{outinfo,jdbcType=INTEGER},
+      </if>
+      <if test="signature != null">
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="uwallet != null">
+        #{uwallet,jdbcType=DOUBLE},
+      </if>
+      <if test="ucredibility != null">
+        #{ucredibility,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="online.wenmeng.bean.uinfoExample" resultType="java.lang.Long">
+    select count(*) from uinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update uinfo
+    <set>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.qqnum != null">
+        QQNum = #{record.qqnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxnum != null">
+        WXNum = #{record.wxnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phonenum != null">
+        phoneNum = #{record.phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tallmail != null">
+        tallMail = #{record.tallmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.urealname != null">
+        URealName = #{record.urealname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unickname != null">
+        UNickname = #{record.unickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.outinfo != null">
+        outInfo = #{record.outinfo,jdbcType=INTEGER},
+      </if>
+      <if test="record.signature != null">
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwallet != null">
+        UWallet = #{record.uwallet,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ucredibility != null">
+        UCredibility = #{record.ucredibility,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update uinfo
+    set userID = #{record.userid,jdbcType=INTEGER},
+      QQNum = #{record.qqnum,jdbcType=VARCHAR},
+      WXNum = #{record.wxnum,jdbcType=VARCHAR},
+      phoneNum = #{record.phonenum,jdbcType=VARCHAR},
+      tallMail = #{record.tallmail,jdbcType=VARCHAR},
+      URealName = #{record.urealname,jdbcType=VARCHAR},
+      UNickname = #{record.unickname,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      outInfo = #{record.outinfo,jdbcType=INTEGER},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      UWallet = #{record.uwallet,jdbcType=DOUBLE},
+      UCredibility = #{record.ucredibility,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="online.wenmeng.bean.uinfo">
+    update uinfo
+    <set>
+      <if test="qqnum != null">
+        QQNum = #{qqnum,jdbcType=VARCHAR},
+      </if>
+      <if test="wxnum != null">
+        WXNum = #{wxnum,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null">
+        phoneNum = #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tallmail != null">
+        tallMail = #{tallmail,jdbcType=VARCHAR},
+      </if>
+      <if test="urealname != null">
+        URealName = #{urealname,jdbcType=VARCHAR},
+      </if>
+      <if test="unickname != null">
+        UNickname = #{unickname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="outinfo != null">
+        outInfo = #{outinfo,jdbcType=INTEGER},
+      </if>
+      <if test="signature != null">
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="uwallet != null">
+        UWallet = #{uwallet,jdbcType=DOUBLE},
+      </if>
+      <if test="ucredibility != null">
+        UCredibility = #{ucredibility,jdbcType=INTEGER},
+      </if>
+    </set>
+    where userID = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="online.wenmeng.bean.uinfo">
+    update uinfo
+    set QQNum = #{qqnum,jdbcType=VARCHAR},
+      WXNum = #{wxnum,jdbcType=VARCHAR},
+      phoneNum = #{phonenum,jdbcType=VARCHAR},
+      tallMail = #{tallmail,jdbcType=VARCHAR},
+      URealName = #{urealname,jdbcType=VARCHAR},
+      UNickname = #{unickname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      outInfo = #{outinfo,jdbcType=INTEGER},
+      signature = #{signature,jdbcType=VARCHAR},
+      UWallet = #{uwallet,jdbcType=DOUBLE},
+      UCredibility = #{ucredibility,jdbcType=INTEGER}
+    where userID = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>

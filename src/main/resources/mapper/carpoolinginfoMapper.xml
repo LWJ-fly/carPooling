@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.wenmeng.dao.carpoolinginfoMapper">
+  <resultMap id="BaseResultMap" type="online.wenmeng.bean.carpoolinginfo">
+    <id column="carID" jdbcType="INTEGER" property="carid" />
+    <result column="userID" jdbcType="INTEGER" property="userid" />
+    <result column="userIDS" jdbcType="VARCHAR" property="userids" />
+    <result column="getNum" jdbcType="INTEGER" property="getnum" />
+    <result column="totalNum" jdbcType="INTEGER" property="totalnum" />
+    <result column="StartTime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="endTime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="readyTime" jdbcType="TIMESTAMP" property="readytime" />
+    <result column="GoTime" jdbcType="TIMESTAMP" property="gotime" />
+    <result column="readyPlace" jdbcType="VARCHAR" property="readyplace" />
+    <result column="GoPlace" jdbcType="VARCHAR" property="goplace" />
+    <result column="limit" jdbcType="INTEGER" property="limit" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="LeaveNum" jdbcType="VARCHAR" property="leavenum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    carID, userID, userIDS, getNum, totalNum, StartTime, endTime, readyTime, GoTime, 
+    readyPlace, GoPlace, limit, state, LeaveNum
+  </sql>
+  <select id="selectByExample" parameterType="online.wenmeng.bean.carpoolinginfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from carpoolinginfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from carpoolinginfo
+    where carID = #{carid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from carpoolinginfo
+    where carID = #{carid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="online.wenmeng.bean.carpoolinginfoExample">
+    delete from carpoolinginfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="online.wenmeng.bean.carpoolinginfo">
+    insert into carpoolinginfo (carID, userID, userIDS, 
+      getNum, totalNum, StartTime, 
+      endTime, readyTime, GoTime, 
+      readyPlace, GoPlace, limit, 
+      state, LeaveNum)
+    values (#{carid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{userids,jdbcType=VARCHAR}, 
+      #{getnum,jdbcType=INTEGER}, #{totalnum,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{readytime,jdbcType=TIMESTAMP}, #{gotime,jdbcType=TIMESTAMP}, 
+      #{readyplace,jdbcType=VARCHAR}, #{goplace,jdbcType=VARCHAR}, #{limit,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER}, #{leavenum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="online.wenmeng.bean.carpoolinginfo">
+    insert into carpoolinginfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="carid != null">
+        carID,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="userids != null">
+        userIDS,
+      </if>
+      <if test="getnum != null">
+        getNum,
+      </if>
+      <if test="totalnum != null">
+        totalNum,
+      </if>
+      <if test="starttime != null">
+        StartTime,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
+      <if test="readytime != null">
+        readyTime,
+      </if>
+      <if test="gotime != null">
+        GoTime,
+      </if>
+      <if test="readyplace != null">
+        readyPlace,
+      </if>
+      <if test="goplace != null">
+        GoPlace,
+      </if>
+      <if test="limit != null">
+        limit,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="leavenum != null">
+        LeaveNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="carid != null">
+        #{carid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="userids != null">
+        #{userids,jdbcType=VARCHAR},
+      </if>
+      <if test="getnum != null">
+        #{getnum,jdbcType=INTEGER},
+      </if>
+      <if test="totalnum != null">
+        #{totalnum,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readytime != null">
+        #{readytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gotime != null">
+        #{gotime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readyplace != null">
+        #{readyplace,jdbcType=VARCHAR},
+      </if>
+      <if test="goplace != null">
+        #{goplace,jdbcType=VARCHAR},
+      </if>
+      <if test="limit != null">
+        #{limit,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="leavenum != null">
+        #{leavenum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="online.wenmeng.bean.carpoolinginfoExample" resultType="java.lang.Long">
+    select count(*) from carpoolinginfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update carpoolinginfo
+    <set>
+      <if test="record.carid != null">
+        carID = #{record.carid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userids != null">
+        userIDS = #{record.userids,jdbcType=VARCHAR},
+      </if>
+      <if test="record.getnum != null">
+        getNum = #{record.getnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalnum != null">
+        totalNum = #{record.totalnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.starttime != null">
+        StartTime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null">
+        endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.readytime != null">
+        readyTime = #{record.readytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gotime != null">
+        GoTime = #{record.gotime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.readyplace != null">
+        readyPlace = #{record.readyplace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goplace != null">
+        GoPlace = #{record.goplace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limit != null">
+        limit = #{record.limit,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.leavenum != null">
+        LeaveNum = #{record.leavenum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update carpoolinginfo
+    set carID = #{record.carid,jdbcType=INTEGER},
+      userID = #{record.userid,jdbcType=INTEGER},
+      userIDS = #{record.userids,jdbcType=VARCHAR},
+      getNum = #{record.getnum,jdbcType=INTEGER},
+      totalNum = #{record.totalnum,jdbcType=INTEGER},
+      StartTime = #{record.starttime,jdbcType=TIMESTAMP},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      readyTime = #{record.readytime,jdbcType=TIMESTAMP},
+      GoTime = #{record.gotime,jdbcType=TIMESTAMP},
+      readyPlace = #{record.readyplace,jdbcType=VARCHAR},
+      GoPlace = #{record.goplace,jdbcType=VARCHAR},
+      limit = #{record.limit,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=INTEGER},
+      LeaveNum = #{record.leavenum,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="online.wenmeng.bean.carpoolinginfo">
+    update carpoolinginfo
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="userids != null">
+        userIDS = #{userids,jdbcType=VARCHAR},
+      </if>
+      <if test="getnum != null">
+        getNum = #{getnum,jdbcType=INTEGER},
+      </if>
+      <if test="totalnum != null">
+        totalNum = #{totalnum,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        StartTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readytime != null">
+        readyTime = #{readytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gotime != null">
+        GoTime = #{gotime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readyplace != null">
+        readyPlace = #{readyplace,jdbcType=VARCHAR},
+      </if>
+      <if test="goplace != null">
+        GoPlace = #{goplace,jdbcType=VARCHAR},
+      </if>
+      <if test="limit != null">
+        limit = #{limit,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="leavenum != null">
+        LeaveNum = #{leavenum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where carID = #{carid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="online.wenmeng.bean.carpoolinginfo">
+    update carpoolinginfo
+    set userID = #{userid,jdbcType=INTEGER},
+      userIDS = #{userids,jdbcType=VARCHAR},
+      getNum = #{getnum,jdbcType=INTEGER},
+      totalNum = #{totalnum,jdbcType=INTEGER},
+      StartTime = #{starttime,jdbcType=TIMESTAMP},
+      endTime = #{endtime,jdbcType=TIMESTAMP},
+      readyTime = #{readytime,jdbcType=TIMESTAMP},
+      GoTime = #{gotime,jdbcType=TIMESTAMP},
+      readyPlace = #{readyplace,jdbcType=VARCHAR},
+      GoPlace = #{goplace,jdbcType=VARCHAR},
+      limit = #{limit,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      LeaveNum = #{leavenum,jdbcType=VARCHAR}
+    where carID = #{carid,jdbcType=INTEGER}
+  </update>
+</mapper>
