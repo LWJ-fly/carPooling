@@ -45,7 +45,7 @@
             <!-- 验证用户登录 -->
             <aop:before method="loginCheck" pointcut="execution(* *..*.*.*(..,javax.servlet.http.HttpSession,..))"/>
             <!-- 验证用户secret -->
-            <aop:before method="secretCheck" pointcut="execution(* *..*.*.*BySecret(..,String,..))"/>
+<!--            <aop:before method="secretCheck" pointcut="execution(* *..*.*.*BySecret(..,String,..))"/>-->
         </aop:aspect>
     </aop:config>
 </beans>

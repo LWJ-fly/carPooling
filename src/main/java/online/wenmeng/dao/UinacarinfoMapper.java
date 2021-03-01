@@ -4,9 +4,10 @@ import online.wenmeng.bean.Uinacarinfo;
 import online.wenmeng.bean.UinacarinfoExample;
 import online.wenmeng.bean.UinacarinfoKey;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface UinacarinfoMapper {
     long countByExample(UinacarinfoExample example);
 

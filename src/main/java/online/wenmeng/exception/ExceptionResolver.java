@@ -7,7 +7,6 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,8 +32,8 @@ public class ExceptionResolver implements HandlerExceptionResolver {
         if (e instanceof java.lang.reflect.InvocationTargetException){
             e = (Exception) e.getCause();
         }
-        //获取到异常对象
-        if (e instanceof LoginException){
+        //获取到异常对象online.wenmeng.exception.LoginException
+        if (e instanceof online.wenmeng.exception.LoginException  ){
             modelAndView.addObject(Config.ACTION,Config.LOGIN);
             modelAndView.addObject(Config.MSG,"当前用户未登录");
         }else if (e instanceof ServerException){

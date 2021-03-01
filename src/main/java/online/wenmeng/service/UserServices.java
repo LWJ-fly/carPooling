@@ -26,7 +26,7 @@ public class UserServices {
     @Autowired
     private UloginMapper uloginMapper;
 
-    public Map<String,Object> getUser(HttpSession session, String code) throws ServerException {
+    public Map<String,Object> login(HttpSession session, String code) throws ServerException {
         if (code.length()==32){
             String request = HttpsRequest.httpsRequest("https://wenmeng.online/api/changeUserInfo/123456/"+ code, "GET", null);
             JSONObject json = JSON.parseObject(request);

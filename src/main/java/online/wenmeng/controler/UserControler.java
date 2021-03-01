@@ -1,5 +1,6 @@
 package online.wenmeng.controler;
 
+import online.wenmeng.exception.ServerException;
 import online.wenmeng.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,8 @@ public class UserControler {
      *                  也会有限制用户登录、当前用户被禁用
      */
     @RequestMapping("/login/{code}")
-    public Map<String,Object> getUser(HttpSession session, @PathVariable("code") String code){
-        return userServices.getUser(session, code);
+    public Map<String,Object> login(HttpSession session, @PathVariable("code") String code) throws ServerException {
+        return userServices.login(session, code);
     }
 
     /**

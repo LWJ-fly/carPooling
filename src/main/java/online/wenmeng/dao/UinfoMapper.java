@@ -3,9 +3,10 @@ package online.wenmeng.dao;
 import online.wenmeng.bean.Uinfo;
 import online.wenmeng.bean.UinfoExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface UinfoMapper {
     long countByExample(UinfoExample example);
 

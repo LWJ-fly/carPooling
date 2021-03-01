@@ -3,9 +3,10 @@ package online.wenmeng.dao;
 import online.wenmeng.bean.Ulogin;
 import online.wenmeng.bean.UloginExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface UloginMapper {
     long countByExample(UloginExample example);
 
