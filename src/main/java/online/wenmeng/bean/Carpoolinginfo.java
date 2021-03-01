@@ -2,7 +2,7 @@ package online.wenmeng.bean;
 
 import java.util.Date;
 
-public class carpoolinginfo {
+public class Carpoolinginfo {
     private Integer carid;
 
     private Integer userid;

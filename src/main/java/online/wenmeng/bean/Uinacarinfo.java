@@ -2,7 +2,7 @@ package online.wenmeng.bean;
 
 import java.util.Date;
 
-public class uinacarinfo extends uinacarinfoKey {
+public class Uinacarinfo extends UinacarinfoKey {
     private String incarmsg;
 
     private Date jointime;

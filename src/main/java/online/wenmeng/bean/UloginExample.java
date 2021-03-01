@@ -3,14 +3,14 @@ package online.wenmeng.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class uloginExample {
+public class UloginExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public uloginExample() {
+    public UloginExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -174,52 +174,62 @@ public class uloginExample {
             return (Criteria) this;
         }
 
-        public Criteria andQqloginEqualTo(Integer value) {
+        public Criteria andQqloginEqualTo(String value) {
             addCriterion("qqLogin =", value, "qqlogin");
             return (Criteria) this;
         }
 
-        public Criteria andQqloginNotEqualTo(Integer value) {
+        public Criteria andQqloginNotEqualTo(String value) {
             addCriterion("qqLogin <>", value, "qqlogin");
             return (Criteria) this;
         }
 
-        public Criteria andQqloginGreaterThan(Integer value) {
+        public Criteria andQqloginGreaterThan(String value) {
             addCriterion("qqLogin >", value, "qqlogin");
             return (Criteria) this;
         }
 
-        public Criteria andQqloginGreaterThanOrEqualTo(Integer value) {
+        public Criteria andQqloginGreaterThanOrEqualTo(String value) {
             addCriterion("qqLogin >=", value, "qqlogin");
             return (Criteria) this;
         }
 
-        public Criteria andQqloginLessThan(Integer value) {
+        public Criteria andQqloginLessThan(String value) {
             addCriterion("qqLogin <", value, "qqlogin");
             return (Criteria) this;
         }
 
-        public Criteria andQqloginLessThanOrEqualTo(Integer value) {
+        public Criteria andQqloginLessThanOrEqualTo(String value) {
             addCriterion("qqLogin <=", value, "qqlogin");
             return (Criteria) this;
         }
 
-        public Criteria andQqloginIn(List<Integer> values) {
+        public Criteria andQqloginLike(String value) {
+            addCriterion("qqLogin like", value, "qqlogin");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqloginNotLike(String value) {
+            addCriterion("qqLogin not like", value, "qqlogin");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqloginIn(List<String> values) {
             addCriterion("qqLogin in", values, "qqlogin");
             return (Criteria) this;
         }
 
-        public Criteria andQqloginNotIn(List<Integer> values) {
+        public Criteria andQqloginNotIn(List<String> values) {
             addCriterion("qqLogin not in", values, "qqlogin");
             return (Criteria) this;
         }
 
-        public Criteria andQqloginBetween(Integer value1, Integer value2) {
+        public Criteria andQqloginBetween(String value1, String value2) {
             addCriterion("qqLogin between", value1, value2, "qqlogin");
             return (Criteria) this;
         }
 
-        public Criteria andQqloginNotBetween(Integer value1, Integer value2) {
+        public Criteria andQqloginNotBetween(String value1, String value2) {
             addCriterion("qqLogin not between", value1, value2, "qqlogin");
             return (Criteria) this;
         }
@@ -571,6 +581,66 @@ public class uloginExample {
 
         public Criteria andZhpwdNotBetween(String value1, String value2) {
             addCriterion("zhPwd not between", value1, value2, "zhpwd");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableIsNull() {
+            addCriterion("usable is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableIsNotNull() {
+            addCriterion("usable is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableEqualTo(Integer value) {
+            addCriterion("usable =", value, "usable");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableNotEqualTo(Integer value) {
+            addCriterion("usable <>", value, "usable");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableGreaterThan(Integer value) {
+            addCriterion("usable >", value, "usable");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableGreaterThanOrEqualTo(Integer value) {
+            addCriterion("usable >=", value, "usable");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableLessThan(Integer value) {
+            addCriterion("usable <", value, "usable");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableLessThanOrEqualTo(Integer value) {
+            addCriterion("usable <=", value, "usable");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableIn(List<Integer> values) {
+            addCriterion("usable in", values, "usable");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableNotIn(List<Integer> values) {
+            addCriterion("usable not in", values, "usable");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableBetween(Integer value1, Integer value2) {
+            addCriterion("usable between", value1, value2, "usable");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsableNotBetween(Integer value1, Integer value2) {
+            addCriterion("usable not between", value1, value2, "usable");
             return (Criteria) this;
         }
     }

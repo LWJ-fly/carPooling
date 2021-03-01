@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class carpoolinginfoExample {
+public class CarpoolinginfoExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public carpoolinginfoExample() {
+    public CarpoolinginfoExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

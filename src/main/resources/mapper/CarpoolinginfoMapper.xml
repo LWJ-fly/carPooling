@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="online.wenmeng.dao.carpoolinginfoMapper">
-  <resultMap id="BaseResultMap" type="online.wenmeng.bean.carpoolinginfo">
+<mapper namespace="online.wenmeng.dao.CarpoolinginfoMapper">
+  <resultMap id="BaseResultMap" type="online.wenmeng.bean.Carpoolinginfo">
     <id column="carID" jdbcType="INTEGER" property="carid" />
     <result column="userID" jdbcType="INTEGER" property="userid" />
     <result column="userIDS" jdbcType="VARCHAR" property="userids" />
@@ -79,7 +79,7 @@
     carID, userID, userIDS, getNum, totalNum, StartTime, endTime, readyTime, GoTime, 
     readyPlace, GoPlace, limit, state, LeaveNum
   </sql>
-  <select id="selectByExample" parameterType="online.wenmeng.bean.carpoolinginfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="online.wenmeng.bean.CarpoolinginfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -103,13 +103,13 @@
     delete from carpoolinginfo
     where carID = #{carid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="online.wenmeng.bean.carpoolinginfoExample">
+  <delete id="deleteByExample" parameterType="online.wenmeng.bean.CarpoolinginfoExample">
     delete from carpoolinginfo
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="online.wenmeng.bean.carpoolinginfo">
+  <insert id="insert" parameterType="online.wenmeng.bean.Carpoolinginfo">
     insert into carpoolinginfo (carID, userID, userIDS, 
       getNum, totalNum, StartTime, 
       endTime, readyTime, GoTime, 
@@ -121,7 +121,7 @@
       #{readyplace,jdbcType=VARCHAR}, #{goplace,jdbcType=VARCHAR}, #{limit,jdbcType=INTEGER}, 
       #{state,jdbcType=INTEGER}, #{leavenum,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="online.wenmeng.bean.carpoolinginfo">
+  <insert id="insertSelective" parameterType="online.wenmeng.bean.Carpoolinginfo">
     insert into carpoolinginfo
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="carid != null">
@@ -212,7 +212,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="online.wenmeng.bean.carpoolinginfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="online.wenmeng.bean.CarpoolinginfoExample" resultType="java.lang.Long">
     select count(*) from carpoolinginfo
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -288,7 +288,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="online.wenmeng.bean.carpoolinginfo">
+  <update id="updateByPrimaryKeySelective" parameterType="online.wenmeng.bean.Carpoolinginfo">
     update carpoolinginfo
     <set>
       <if test="userid != null">
@@ -333,7 +333,7 @@
     </set>
     where carID = #{carid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="online.wenmeng.bean.carpoolinginfo">
+  <update id="updateByPrimaryKey" parameterType="online.wenmeng.bean.Carpoolinginfo">
     update carpoolinginfo
     set userID = #{userid,jdbcType=INTEGER},
       userIDS = #{userids,jdbcType=VARCHAR},

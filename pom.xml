@@ -17,6 +17,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+    <!-- 文件拷贝时的编码 -->
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- 编译时的编码 -->
+    <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
   </properties>
 
   <dependencies>
@@ -143,15 +147,16 @@
       <artifactId>c3p0</artifactId>
       <version>0.9.5.3</version>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>c3p0</groupId>-->
-<!--      <artifactId>c3p0</artifactId>-->
-<!--      <version>0.9.1.2</version>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.6.2</version>
+    </dependency>
   </dependencies>
 
   <build>
     <finalName>carPooling</finalName>
+
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
@@ -162,18 +167,30 @@
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+            <encoding>UTF-8</encoding>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
+          <configuration>
+            <encoding>UTF-8</encoding>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
+          <configuration>
+            <encoding>UTF-8</encoding>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-war-plugin</artifactId>
           <version>3.2.2</version>
+          <configuration>
+            <resourceEncoding>UTF-8</resourceEncoding>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>

@@ -3,14 +3,14 @@ package online.wenmeng.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class uinfoExample {
+public class UinfoExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public uinfoExample() {
+    public UinfoExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

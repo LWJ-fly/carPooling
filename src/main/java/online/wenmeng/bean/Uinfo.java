@@ -1,6 +1,6 @@
 package online.wenmeng.bean;
 
-public class uinfo {
+public class Uinfo {
     private Integer userid;
 
     private String qqnum;

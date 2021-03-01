@@ -1,6 +1,6 @@
 package online.wenmeng.bean;
 
-public class uinacarinfoKey {
+public class UinacarinfoKey {
     private Integer carid;
 
     private Integer userid;

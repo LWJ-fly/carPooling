@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="online.wenmeng.dao.uinacarinfoMapper">
-  <resultMap id="BaseResultMap" type="online.wenmeng.bean.uinacarinfo">
+<mapper namespace="online.wenmeng.dao.UinacarinfoMapper">
+  <resultMap id="BaseResultMap" type="online.wenmeng.bean.Uinacarinfo">
     <id column="carID" jdbcType="INTEGER" property="carid" />
     <id column="userID" jdbcType="INTEGER" property="userid" />
     <result column="inCarMsg" jdbcType="VARCHAR" property="incarmsg" />
@@ -74,7 +74,7 @@
   <sql id="Base_Column_List">
     carID, userID, inCarMsg, joinTime, carState, outInfo, QQNum, WXNum, phoneNum, email
   </sql>
-  <select id="selectByExample" parameterType="online.wenmeng.bean.uinacarinfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="online.wenmeng.bean.UinacarinfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -88,25 +88,25 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="online.wenmeng.bean.uinacarinfoKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="online.wenmeng.bean.UinacarinfoKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from uinacarinfo
     where carID = #{carid,jdbcType=INTEGER}
       and userID = #{userid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="online.wenmeng.bean.uinacarinfoKey">
+  <delete id="deleteByPrimaryKey" parameterType="online.wenmeng.bean.UinacarinfoKey">
     delete from uinacarinfo
     where carID = #{carid,jdbcType=INTEGER}
       and userID = #{userid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="online.wenmeng.bean.uinacarinfoExample">
+  <delete id="deleteByExample" parameterType="online.wenmeng.bean.UinacarinfoExample">
     delete from uinacarinfo
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="online.wenmeng.bean.uinacarinfo">
+  <insert id="insert" parameterType="online.wenmeng.bean.Uinacarinfo">
     insert into uinacarinfo (carID, userID, inCarMsg, 
       joinTime, carState, outInfo, 
       QQNum, WXNum, phoneNum, 
@@ -116,7 +116,7 @@
       #{qqnum,jdbcType=VARCHAR}, #{wxnum,jdbcType=VARCHAR}, #{phonenum,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="online.wenmeng.bean.uinacarinfo">
+  <insert id="insertSelective" parameterType="online.wenmeng.bean.Uinacarinfo">
     insert into uinacarinfo
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="carid != null">
@@ -183,7 +183,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="online.wenmeng.bean.uinacarinfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="online.wenmeng.bean.UinacarinfoExample" resultType="java.lang.Long">
     select count(*) from uinacarinfo
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -243,7 +243,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="online.wenmeng.bean.uinacarinfo">
+  <update id="updateByPrimaryKeySelective" parameterType="online.wenmeng.bean.Uinacarinfo">
     update uinacarinfo
     <set>
       <if test="incarmsg != null">
@@ -274,7 +274,7 @@
     where carID = #{carid,jdbcType=INTEGER}
       and userID = #{userid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="online.wenmeng.bean.uinacarinfo">
+  <update id="updateByPrimaryKey" parameterType="online.wenmeng.bean.Uinacarinfo">
     update uinacarinfo
     set inCarMsg = #{incarmsg,jdbcType=VARCHAR},
       joinTime = #{jointime,jdbcType=TIMESTAMP},

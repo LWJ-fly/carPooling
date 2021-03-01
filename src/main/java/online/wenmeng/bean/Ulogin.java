@@ -1,9 +1,9 @@
 package online.wenmeng.bean;
 
-public class ulogin {
+public class Ulogin {
     private Integer userid;
 
-    private Integer qqlogin;
+    private String qqlogin;
 
     private String wxlogin;
 
@@ -15,6 +15,8 @@ public class ulogin {
 
     private String zhpwd;
 
+    private Integer usable;
+
     public Integer getUserid() {
         return userid;
     }
@@ -23,12 +25,12 @@ public class ulogin {
         this.userid = userid;
     }
 
-    public Integer getQqlogin() {
+    public String getQqlogin() {
         return qqlogin;
     }
 
-    public void setQqlogin(Integer qqlogin) {
-        this.qqlogin = qqlogin;
+    public void setQqlogin(String qqlogin) {
+        this.qqlogin = qqlogin == null ? null : qqlogin.trim();
     }
 
     public String getWxlogin() {
@@ -69,5 +71,13 @@ public class ulogin {
 
     public void setZhpwd(String zhpwd) {
         this.zhpwd = zhpwd == null ? null : zhpwd.trim();
+    }
+
+    public Integer getUsable() {
+        return usable;
+    }
+
+    public void setUsable(Integer usable) {
+        this.usable = usable;
     }
 }
