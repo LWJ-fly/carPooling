@@ -1,7 +1,7 @@
 package online.wenmeng.controler;
 
 import online.wenmeng.exception.ServerException;
-import online.wenmeng.service.UserServices;
+import online.wenmeng.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ import java.util.Map;
 public class UserControler {
 
     @Autowired
-    private UserServices userServices;
+    private UserService userService;
 
     /**
      * 用户登录调用
@@ -31,7 +31,7 @@ public class UserControler {
      */
     @RequestMapping("/login/{code}")
     public Map<String,Object> login(HttpSession session, @PathVariable("code") String code) throws ServerException {
-        return userServices.login(session, code);
+        return userService.login(session, code);
     }
 
     /**
@@ -40,7 +40,7 @@ public class UserControler {
      */
     @RequestMapping("/exit")
     public Map<String,Object> exit(HttpSession session){
-        return userServices.exit(session);
+        return userService.exit(session);
     }
 
 }
