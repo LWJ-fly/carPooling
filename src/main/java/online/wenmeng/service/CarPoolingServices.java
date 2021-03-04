@@ -2,6 +2,7 @@ package online.wenmeng.service;
 
 import online.wenmeng.bean.Carpoolinginfo;
 import online.wenmeng.bean.CarpoolinginfoExample;
+import online.wenmeng.bean.Uinacarinfo;
 import online.wenmeng.config.Config;
 import online.wenmeng.dao.CarpoolinginfoMapper;
 import online.wenmeng.exception.ParameterError;
@@ -111,8 +112,39 @@ public class CarPoolingServices {
         int insert = carpoolinginfoMapper.insert(carpoolinginfo);
         if (insert>0){//插入成功
             //同步自己的拼车信息
-
+            UinACarService uinACarService = new UinACarService();
+            Uinacarinfo uinacarinfo = uinACarService.insertUinacar(carPoolingId, openId, inCarMsg, qqNum, wxNum, phoneNum, email);
+            if (uinacarinfo!=null){
+                return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfo);
+            }
         }
-        return null;
+        throw new ParameterError();
+    }
+
+
+    public Map<String, Object> joinCarPooling(HttpSession session, int carId, String inCarMsg, String qqNum, String wxNum, String phoneNum, String email) throws ParameterError {
+        //获取用户的ID
+        Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
+        int openId = (int) userLoginInfo.get(Config.Openid);
+        Carpoolinginfo carpoolinginfo = carpoolinginfoMapper.selectByPrimaryKey(carId);
+        if (carpoolinginfo!=null&&carpoolinginfo.getState()==1&&!carpoolinginfo.getUserids().contains(openId+"")){//传入的信息正确
+            //更新拼车人数
+            carpoolinginfo.setGetnum(carpoolinginfo.getGetnum()-1);
+            if (carpoolinginfo.getUserids()!=null&&carpoolinginfo.getUserids().trim().length()>0){
+                carpoolinginfo.setUserids(carpoolinginfo.getUserids()+Config.splitUsers+openId);
+            }else {
+                carpoolinginfo.setUserids(""+openId);
+            }
+            int i = carpoolinginfoMapper.updateByPrimaryKeySelective(carpoolinginfo);
+            if (i>0){
+                //同步自己的拼车信息
+                UinACarService uinACarService = new UinACarService();
+                Uinacarinfo uinacarinfo = uinACarService.insertUinacar(carpoolinginfo.getCarid(), openId, inCarMsg, qqNum, wxNum, phoneNum, email);
+                if (uinacarinfo!=null){
+                    return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfo);
+                }
+            }
+        }
+        throw new ParameterError();
     }
 }

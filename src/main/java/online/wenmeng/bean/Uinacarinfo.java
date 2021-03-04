@@ -21,6 +21,20 @@ public class Uinacarinfo extends UinacarinfoKey {
 
     private String email;
 
+    public Uinacarinfo(String incarmsg, Date jointime, String carstate, Integer outinfo, String qqnum, String wxnum, String phonenum, String email) {
+        this.incarmsg = incarmsg;
+        this.jointime = jointime;
+        this.carstate = carstate;
+        this.outinfo = outinfo;
+        this.qqnum = qqnum;
+        this.wxnum = wxnum;
+        this.phonenum = phonenum;
+        this.email = email;
+    }
+
+    public Uinacarinfo() {
+    }
+
     public String getIncarmsg() {
         return incarmsg;
     }

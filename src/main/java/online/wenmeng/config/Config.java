@@ -17,7 +17,10 @@ public class Config {
     public static Map<Integer,Integer> sendEmailCountMap = new HashMap<>();
     //控制每个用户提交意见的次数
     public static int numberOfFeedback = 3;
-
+    /**
+     * 数据库使用
+     */
+    public static String splitUsers = ",";
 
     //出现错误，很有可能是未知错误
     public static String ERROR = "error";

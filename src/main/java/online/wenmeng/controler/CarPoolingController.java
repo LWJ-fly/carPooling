@@ -102,8 +102,23 @@ public class CarPoolingController {
      * @param email 拼车结果通知邮箱——为空则为null
      * @return 返回拼车状态
      */
-    @RequestMapping("createCarPooling/{origin}/{bourn}/{readyTime}/{GoTime}/{totalNum}/{getNum}/{inCarMsg}/{QQNum}/{WXNum}/{phoneNum}/{email}")
+    @RequestMapping("createCarPooling/{origin}/{bourn}/{readyTime:.*}/{GoTime:.*}/{totalNum}/{getNum}/{inCarMsg:.*}/{QQNum}/{WXNum:.*}/{phoneNum}/{email:.*}")
     public Map<String,Object> createCarPooling(HttpSession session,String origin,String bourn,String readyTime,String GoTime,int totalNum,int getNum,String inCarMsg,String QQNum,String WXNum,String phoneNum,String email) throws ParameterError {
         return carPoolingServices.createCarPooling(session, origin, bourn, readyTime, GoTime, totalNum, getNum, inCarMsg, QQNum, WXNum, phoneNum, email);
     }
+
+    /**
+     * 加入拼车 填写加入拼车的信息
+     * @param inCarMsg  在拼车中的留言——为空则为null
+     * @param QQNum     QQ号——为空则为null
+     * @param WXNum     微信号——为空则为null
+     * @param phoneNum  手机号——为空则为null
+     * @param email 拼车结果通知邮箱——为空则为null
+     * @return 返回拼车状态
+     */
+    @RequestMapping("joinCarPooling/{carId}/{inCarMsg:.*}/{QQNum}/{WXNum:.*}/{phoneNum}/{email:.*}")
+    public Map<String,Object> joinCarPooling(HttpSession session,@PathVariable("carId") int carId,@PathVariable("inCarMsg") String inCarMsg,@PathVariable("QQNum") String QQNum,@PathVariable("WXNum") String WXNum,@PathVariable("phoneNum") String phoneNum,@PathVariable("email") String email) throws ParameterError {
+        return carPoolingServices.joinCarPooling(session,carId,inCarMsg,QQNum,WXNum,phoneNum,email);
+    }
+
 }
