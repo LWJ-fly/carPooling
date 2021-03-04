@@ -3,14 +3,20 @@ package online.wenmeng.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import online.wenmeng.bean.Ulogin;
+import online.wenmeng.bean.UloginExample;
 import online.wenmeng.config.Config;
 import online.wenmeng.dao.UloginMapper;
 import online.wenmeng.exception.ServerException;
 import online.wenmeng.utils.HttpsRequest;
 import online.wenmeng.utils.MyUtils;
+import online.wenmeng.utils.SentEmail;
+import online.wenmeng.utils.TransitionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.CheckedOutputStream;
 
@@ -36,12 +42,18 @@ public class UserService {
                 JSONObject qqInfo = json.getJSONObject(Config.DATA);
                 Integer openid = qqInfo.getObject("openid", Integer.class);
                 if (openid!=null){
-                    Ulogin ulogin = uloginMapper.selectByPrimaryKey(openid);
+                    UloginExample uloginExample = new UloginExample();
+                    UloginExample.Criteria criteria = uloginExample.createCriteria();
+                    criteria.andQqloginEqualTo(openid+"");
+                    List<Ulogin> ulogins = uloginMapper.selectByExample(uloginExample);
+                    Ulogin ulogin = null;
+                    if (ulogins.size()>0){
+                        ulogin = ulogins.get(0);
+                    }
                     if (ulogin==null){//第一次登录
                         Ulogin insertUlogin = addULogin(openid + "");
                         if (insertUlogin!=null){//添加用户成功
-                            UInfoService uInfoService = new UInfoService();
-                            Boolean aBoolean = uInfoService.insertUInfo(insertUlogin.getUserid(), qqInfo.getString("nickname"), qqInfo.getString("gender").equals("男") ? 1 : 0);
+                            Boolean aBoolean = new UInfoService().insertUInfo(insertUlogin.getUserid(), qqInfo.getString("nickname"), qqInfo.getString("gender").equals("男") ? 1 : 0);
                             if (aBoolean){
                                 Map<String, Object> userLoginInfo = MyUtils.createUserLoginInfo(insertUlogin.getUserid(), qqInfo.getString("nickname"), qqInfo.getString("gender"), qqInfo.getString("figureurl_qq_1"));
                                 session.setAttribute(Config.userInfoInRun,userLoginInfo);
@@ -96,4 +108,18 @@ public class UserService {
         return null;
     }
 
+    public Map<String, Object> sendEmail(HttpSession session, String title, String content) {
+        Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
+        if (Config.sendEmailCountMap.containsKey(userLoginInfo.get(Config.Openid))){
+            int count = Config.sendEmailCountMap.get(userLoginInfo.get(Config.Openid));
+            if (count>Config.numberOfFeedback){
+                return MyUtils.getNewMap(Config.ERROR,Config.ERROR,"Feedback more than three times, please try again tomorrow",null);
+            }
+            Config.sendEmailCountMap.put(TransitionUtil.transitionType(userLoginInfo.get(Config.Openid),int.class),count+1);
+        }else {
+            Config.sendEmailCountMap.put(TransitionUtil.transitionType(userLoginInfo.get(Config.Openid),int.class),1);
+        }
+        SentEmail.sentEmail(Config.ReceiveMailNum,content+"\r\n"+userLoginInfo,content);
+        return MyUtils.getNewMap(Config.SUCCESS,null,"Thank you for your feedback. We will get better and better",null);
+    }
 }

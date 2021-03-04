@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -240,5 +241,18 @@ public class MyUtils {
             ip = request.getRemoteAddr();
         }
         return ip;
+    }
+
+    /**
+     * 根据用户的session获取用户的信息
+     * @param session
+     */
+    public static int getOpenIdBySession(HttpSession session) {
+        Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
+        return (int) userLoginInfo.get(Config.Openid);
+    }
+
+    public static String dateFormat(Date date, String PatternDate){
+        return new SimpleDateFormat(PatternDate).format(date);
     }
 }

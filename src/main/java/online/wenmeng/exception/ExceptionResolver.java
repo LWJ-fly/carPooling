@@ -36,6 +36,9 @@ public class ExceptionResolver implements HandlerExceptionResolver {
         if (e instanceof online.wenmeng.exception.LoginException  ){
             modelAndView.addObject(Config.ACTION,Config.LOGIN);
             modelAndView.addObject(Config.MSG,"当前用户未登录");
+        }else if (e instanceof ParameterError){
+            modelAndView.addObject(Config.ACTION,Config.RETRY);
+            modelAndView.addObject(Config.MSG,"参数错误");
         }else if (e instanceof ServerException){
             SentEmail.sentEmail("15518064076@163.com","error:"+e,"服务器错误");
             modelAndView.addObject(Config.MSG,"Server error, please contact administrator");

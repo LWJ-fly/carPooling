@@ -1,10 +1,12 @@
 package online.wenmeng.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Uinacarinfo extends UinacarinfoKey {
     private String incarmsg;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date jointime;
 
     private String carstate;

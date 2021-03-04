@@ -1,5 +1,8 @@
 package online.wenmeng.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Auther: 狼芒
  * @Date: 2021/2/14 23:09
@@ -7,6 +10,13 @@ package online.wenmeng.config;
  * @version: 1.0
  */
 public class Config {
+
+    //接收意见反馈的邮箱
+    public static String ReceiveMailNum = "15518064076@163.com";
+    //保存服务信息
+    public static Map<Integer,Integer> sendEmailCountMap = new HashMap<>();
+    //控制每个用户提交意见的次数
+    public static int numberOfFeedback = 3;
 
 
     //出现错误，很有可能是未知错误
@@ -43,5 +53,8 @@ public class Config {
     public static String ChatHead = "chatHead";
     //用户登录时保存在session中的登录的QQ信息
     public static String userInfoInRun = "userInfoInRun";
+
+    //程序中对日期的格式化
+    public static String patternDate = "yyyy-MM-dd HH:mm:ss";
 
 }

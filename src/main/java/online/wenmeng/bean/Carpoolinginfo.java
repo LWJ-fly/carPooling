@@ -1,5 +1,8 @@
 package online.wenmeng.bean;
 
+import online.wenmeng.config.Config;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Carpoolinginfo {
@@ -13,12 +16,13 @@ public class Carpoolinginfo {
 
     private Integer totalnum;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date starttime;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endtime;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date readytime;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date gotime;
 
     private String readyplace;
@@ -30,6 +34,26 @@ public class Carpoolinginfo {
     private Integer state;
 
     private String leavenum;
+
+    public Carpoolinginfo() {
+    }
+
+    public Carpoolinginfo(Integer carid, Integer userid, String userids, Integer getnum, Integer totalnum, Date starttime, Date endtime, Date readytime, Date gotime, String readyplace, String goplace, Integer limit, Integer state, String leavenum) {
+        this.carid = carid;
+        this.userid = userid;
+        this.userids = userids;
+        this.getnum = getnum;
+        this.totalnum = totalnum;
+        this.starttime = starttime;
+        this.endtime = endtime;
+        this.readytime = readytime;
+        this.gotime = gotime;
+        this.readyplace = readyplace;
+        this.goplace = goplace;
+        this.limit = limit;
+        this.state = state;
+        this.leavenum = leavenum;
+    }
 
     public Integer getCarid() {
         return carid;

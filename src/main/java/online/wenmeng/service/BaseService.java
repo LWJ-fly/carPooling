@@ -53,9 +53,11 @@ public class BaseService {
 
     /**
      * 定时任务，检查拼车时间是否到时间
+     * 每天0点进行必要的刷新
      */
     @Scheduled(cron = "0 0 0 * * ?")
     public void permissionsTask(){
-
+        //每日0点清空上日发送邮件的用户
+        Config.sendEmailCountMap.clear();
     }
 }

@@ -43,4 +43,15 @@ public class UserControler {
         return userService.exit(session);
     }
 
+    /**
+     * 发送意见邮件
+     * @param title 发送的标题
+     * @param content 发送的内容
+     * @return 返回发送状态
+     */
+    @RequestMapping("sendEmail/{title:.*}/{content:.*}")
+    public Map<String,Object> sendEmail(HttpSession session,@PathVariable("title") String title ,@PathVariable("content") String content){
+        return userService.sendEmail( session,  title , content);
+    }
+
 }
