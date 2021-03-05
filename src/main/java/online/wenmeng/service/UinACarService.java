@@ -1,13 +1,21 @@
 package online.wenmeng.service;
 
+import online.wenmeng.bean.Carpoolinginfo;
 import online.wenmeng.bean.Uinacarinfo;
+import online.wenmeng.bean.UinacarinfoExample;
 import online.wenmeng.bean.UinacarinfoKey;
+import online.wenmeng.config.Config;
 import online.wenmeng.dao.UinacarinfoMapper;
-import online.wenmeng.exception.ParameterError;
+import online.wenmeng.exception.ParameterErrorException;
 import online.wenmeng.utils.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: 狼芒
@@ -15,12 +23,13 @@ import java.util.Date;
  * @Descrintion: 用户和拼车之间的关系
  * @version: 1.0
  */
+@Service
 public class UinACarService {
 
     @Autowired
     private UinacarinfoMapper uinacarinfoMapper;
 
-    public Uinacarinfo insertUinacar(int carId,int userId,String inCarMsg,String qqNum,String wxNum,String phone,String email) throws ParameterError {
+    public Uinacarinfo insertUinacar(int carId,int userId,String inCarMsg,String qqNum,String wxNum,String phone,String email) throws ParameterErrorException {
         UinacarinfoKey uinacarinfoKey = new UinacarinfoKey();
         uinacarinfoKey.setCarid(carId);
         uinacarinfoKey.setUserid(userId);
@@ -54,6 +63,94 @@ public class UinACarService {
                 return uinacarinfo_database;
             }
         }
-        throw new ParameterError();
+        throw new ParameterErrorException();
+    }
+
+    public Map<String, Object> findMyCarPooling(HttpSession session) {
+        //获取用户的ID
+        Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
+        int openId = (int) userLoginInfo.get(Config.Openid);
+        UinacarinfoExample uinacarinfoExample = new UinacarinfoExample();
+        uinacarinfoExample.createCriteria().andUseridEqualTo(openId).andCarstateEqualTo(0+"");
+        List<Uinacarinfo> uinacarinfos = uinacarinfoMapper.selectByExample(uinacarinfoExample);
+        //获取拼车的信息
+        CarPoolingServices carPoolingServices = new CarPoolingServices();
+        List<Carpoolinginfo> carpoolinginfos = new ArrayList<>();
+        for (Uinacarinfo c :uinacarinfos) {
+            carpoolinginfos.add(carPoolingServices.getCarPoolingInfoByCarId(c.getCarid()));
+        }
+        return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfos);
+    }
+
+    public Map<String, Object> findMyAllCarPooling(HttpSession session) {
+        //获取用户的ID
+        Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
+        int openId = (int) userLoginInfo.get(Config.Openid);
+        UinacarinfoExample uinacarinfoExample = new UinacarinfoExample();
+        uinacarinfoExample.createCriteria().andUseridEqualTo(openId);
+        List<Uinacarinfo> uinacarinfos = uinacarinfoMapper.selectByExample(uinacarinfoExample);
+        //获取拼车的信息
+        CarPoolingServices carPoolingServices = new CarPoolingServices();
+        List<Carpoolinginfo> carpoolinginfos = new ArrayList<>();
+        for (Uinacarinfo c :uinacarinfos) {
+            carpoolinginfos.add(carPoolingServices.getCarPoolingInfoByCarId(c.getCarid()));
+        }
+        return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfos);
+    }
+
+    /**
+     * 通过主键获取用户拼车信息
+     * @param carId 拼车信息的ID
+     * @param userId 用户的ID
+     * @return
+     */
+    public Uinacarinfo getUinacarinfoByCarIdAndUserId(int carId,int userId){
+        UinacarinfoKey uinacarinfoKey = new Uinacarinfo();
+        uinacarinfoKey.setCarid(carId);
+        uinacarinfoKey.setUserid(userId);
+        return uinacarinfoMapper.selectByPrimaryKey(uinacarinfoKey);
+    }
+
+    public Boolean setUinacarinfo2LeaveByCarIdAndUserId(int carId,int userId){
+        Uinacarinfo uinacarinfo = getUinacarinfoByCarIdAndUserId(carId, userId);
+        uinacarinfo.setCarstate("1");
+        int i = uinacarinfoMapper.updateByPrimaryKey(uinacarinfo);
+        return i>0;
+    }
+
+    public List<Uinacarinfo> hideUinaCarInfo(List<Uinacarinfo> uinacarinfoList){
+        List<Uinacarinfo> hideUinacarinfoList = new ArrayList<>();
+        for (Uinacarinfo uinacarinfo:uinacarinfoList) {
+            hideUinacarinfoList.add(hideProcessing(uinacarinfo));
+        }
+        return hideUinacarinfoList;
+    }
+
+    public Uinacarinfo hideProcessing(Uinacarinfo uinacarinfo){
+        uinacarinfo.setEmail(hideStrProcessing(uinacarinfo.getEmail()));
+        uinacarinfo.setPhonenum(hideStrProcessing(uinacarinfo.getPhonenum()));
+        uinacarinfo.setQqnum(hideStrProcessing(uinacarinfo.getQqnum()));
+        uinacarinfo.setWxnum(hideStrProcessing(uinacarinfo.getWxnum()));
+        return uinacarinfo;
+    }
+
+    public String hideStrProcessing(String str){
+        return str.substring(0,3)+"****"+str.substring(str.length()-3,str.length());
+    }
+
+    public Map<String, Object> findHistoryCarPooling(HttpSession session) {
+        //获取用户的ID
+        Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
+        int openId = (int) userLoginInfo.get(Config.Openid);
+        UinacarinfoExample uinacarinfoExample = new UinacarinfoExample();
+        uinacarinfoExample.createCriteria().andUseridEqualTo(openId).andCarstateNotEqualTo(0+"");
+        List<Uinacarinfo> uinacarinfos = uinacarinfoMapper.selectByExample(uinacarinfoExample);
+        //获取拼车的信息
+        CarPoolingServices carPoolingServices = new CarPoolingServices();
+        List<Carpoolinginfo> carpoolinginfos = new ArrayList<>();
+        for (Uinacarinfo c :uinacarinfos) {
+            carpoolinginfos.add(carPoolingServices.getCarPoolingInfoByCarId(c.getCarid()));
+        }
+        return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfos);
     }
 }

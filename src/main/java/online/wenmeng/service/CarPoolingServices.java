@@ -5,12 +5,14 @@ import online.wenmeng.bean.CarpoolinginfoExample;
 import online.wenmeng.bean.Uinacarinfo;
 import online.wenmeng.config.Config;
 import online.wenmeng.dao.CarpoolinginfoMapper;
-import online.wenmeng.exception.ParameterError;
+import online.wenmeng.exception.ParameterErrorException;
 import online.wenmeng.utils.MyUtils;
+import online.wenmeng.utils.TransitionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +92,7 @@ public class CarPoolingServices {
     }
 
 
-    public Map<String, Object> createCarPooling(HttpSession session, String origin, String bourn, String readyTime, String goTime, int totalNum, int getNum, String inCarMsg, String qqNum, String wxNum, String phoneNum, String email) throws ParameterError {
+    public Map<String, Object> createCarPooling(HttpSession session, String origin, String bourn, String readyTime, String goTime, int totalNum, int getNum, String inCarMsg, String qqNum, String wxNum, String phoneNum, String email) throws ParameterErrorException {
         //获取用户的ID
         Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
         int openId = (int) userLoginInfo.get(Config.Openid);
@@ -107,7 +109,7 @@ public class CarPoolingServices {
             //创建用户拼车信息
             carpoolinginfo = new Carpoolinginfo(carPoolingId,openId,null,getNum,totalNum,new Date(),null,new Date(readyTime),new Date(goTime),origin,bourn,null,1,null);
         } catch (Exception e) {
-            throw new ParameterError();
+            throw new ParameterErrorException();
         }
         int insert = carpoolinginfoMapper.insert(carpoolinginfo);
         if (insert>0){//插入成功
@@ -118,11 +120,11 @@ public class CarPoolingServices {
                 return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfo);
             }
         }
-        throw new ParameterError();
+        throw new ParameterErrorException();
     }
 
 
-    public Map<String, Object> joinCarPooling(HttpSession session, int carId, String inCarMsg, String qqNum, String wxNum, String phoneNum, String email) throws ParameterError {
+    public Map<String, Object> joinCarPooling(HttpSession session, int carId, String inCarMsg, String qqNum, String wxNum, String phoneNum, String email) throws ParameterErrorException {
         //获取用户的ID
         Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
         int openId = (int) userLoginInfo.get(Config.Openid);
@@ -145,6 +147,94 @@ public class CarPoolingServices {
                 }
             }
         }
-        throw new ParameterError();
+        throw new ParameterErrorException();
+    }
+
+
+    /**
+     * 通过拼车ID获取拼车信息
+     * @param carid 拼车的ID
+     * @return
+     */
+    public Carpoolinginfo getCarPoolingInfoByCarId(int carid){
+        return carpoolinginfoMapper.selectByPrimaryKey(carid);
+    }
+
+    public Map<String, Object> findMyDetailCarPooling(HttpSession session, int carId) {
+        //获取用户的ID
+        Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
+        int openId = (int) userLoginInfo.get(Config.Openid);
+        //获取到拼车信息
+        Carpoolinginfo carpoolinginfo = carpoolinginfoMapper.selectByPrimaryKey(carId);
+        //获取到所有的拼车信息
+        UinACarService uinACarService = new UinACarService();
+        List<Uinacarinfo> uinacarinfoList = new ArrayList<>();
+        //车主信息
+        uinacarinfoList.add(uinACarService.getUinacarinfoByCarIdAndUserId(carpoolinginfo.getCarid(),carpoolinginfo.getUserid()));
+        String[] userIds = carpoolinginfo.getUserids().split(Config.splitUsers);
+        for (String userId:userIds) {
+            uinacarinfoList.add(uinACarService.getUinacarinfoByCarIdAndUserId(carpoolinginfo.getCarid(), TransitionUtil.transitionType(userId.trim(),int.class)));
+        }
+        if (!carpoolinginfo.getUserid().equals(openId)&&!carpoolinginfo.getUserids().contains(""+openId)||carpoolinginfo.getState().equals(Config.carpoolinginfo_end)){//如果不是拼车内的成员,必要信息进行打码处理
+            return MyUtils.getNewMap(Config.SUCCESS,null,carpoolinginfo.toString(),uinACarService.hideUinaCarInfo(uinacarinfoList));
+        }
+        return MyUtils.getNewMap(Config.SUCCESS,null,carpoolinginfo.toString(),uinacarinfoList);
+    }
+
+
+    public Map<String, Object> quitCarPooling(HttpSession session, int carId) throws ParameterErrorException {
+        //获取用户的ID
+        Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
+        int openId = (int) userLoginInfo.get(Config.Openid);
+        //获取到拼车信息
+        Carpoolinginfo carpoolinginfo = carpoolinginfoMapper.selectByPrimaryKey(carId);
+        //获取到所有的拼车Id
+        List<Integer> userIdsList = new ArrayList<>();
+        userIdsList.add(TransitionUtil.transitionType(carpoolinginfo.getUserid(),int.class));
+        String[] userIds = carpoolinginfo.getUserids().split(Config.splitUsers);
+        for (String str:userIds) {
+            userIdsList.add(TransitionUtil.transitionType(str.trim(),int.class));
+        }
+
+        if (userIdsList.contains(openId)&&carpoolinginfo.getState().equals(Config.carpoolinginfo_ing)){//加入拼车了，但是没有拼车完成
+            carpoolinginfo.setGetnum(carpoolinginfo.getGetnum()+1);
+            //将此人移动到历史人物
+            String leavenum = carpoolinginfo.getLeavenum();
+            leavenum = leavenum!=null&&leavenum.trim().length()>4?leavenum+Config.splitUsers+openId:openId+"";
+            carpoolinginfo.setLeavenum(leavenum);
+            if (carpoolinginfo.getUserid().equals(openId)){//如果退出拼车的是发起拼车的
+                userIdsList.remove(openId);
+                if (userIdsList.size()>0){
+                    carpoolinginfo.setUserid(userIdsList.get(0));
+                }else {
+                    //只剩一个人，改变拼车状态，并将此人移动到历史人员，并更新自己的信息
+                    carpoolinginfo.setUserid(null);
+                    carpoolinginfo.setState(Config.carpoolinginfo_end);
+                    carpoolinginfo.setEndtime(new Date());
+                }
+            }else {
+                userIdsList.remove(openId);
+                userIdsList.remove(carpoolinginfo.getUserid());
+                String userId =null;
+                for (int userid:userIdsList) {
+                    if (userId!=null){
+                        userId = userid+"";
+                    }else {
+                        userId = Config.splitUsers+userid;
+                    }
+                }
+                carpoolinginfo.setUserids(userId);
+            }
+            int i = carpoolinginfoMapper.updateByPrimaryKey(carpoolinginfo);
+            if (i>0){
+                //更新自己的信息
+                UinACarService uinACarService = new UinACarService();
+                Boolean aBoolean = uinACarService.setUinacarinfo2LeaveByCarIdAndUserId(carpoolinginfo.getCarid(), openId);
+                if (aBoolean){
+                    return MyUtils.getNewMap(Config.SUCCESS,Config.RETRY,null,carpoolinginfo);
+                }
+            }
+        }
+        throw new ParameterErrorException();
     }
 }

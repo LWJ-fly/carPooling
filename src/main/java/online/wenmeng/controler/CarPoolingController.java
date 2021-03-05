@@ -1,6 +1,6 @@
 package online.wenmeng.controler;
 
-import online.wenmeng.exception.ParameterError;
+import online.wenmeng.exception.ParameterErrorException;
 import online.wenmeng.service.CarPoolingServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -103,7 +103,7 @@ public class CarPoolingController {
      * @return 返回拼车状态
      */
     @RequestMapping("createCarPooling/{origin}/{bourn}/{readyTime:.*}/{GoTime:.*}/{totalNum}/{getNum}/{inCarMsg:.*}/{QQNum}/{WXNum:.*}/{phoneNum}/{email:.*}")
-    public Map<String,Object> createCarPooling(HttpSession session,String origin,String bourn,String readyTime,String GoTime,int totalNum,int getNum,String inCarMsg,String QQNum,String WXNum,String phoneNum,String email) throws ParameterError {
+    public Map<String,Object> createCarPooling(HttpSession session,String origin,String bourn,String readyTime,String GoTime,int totalNum,int getNum,String inCarMsg,String QQNum,String WXNum,String phoneNum,String email) throws ParameterErrorException {
         return carPoolingServices.createCarPooling(session, origin, bourn, readyTime, GoTime, totalNum, getNum, inCarMsg, QQNum, WXNum, phoneNum, email);
     }
 
@@ -117,8 +117,31 @@ public class CarPoolingController {
      * @return 返回拼车状态
      */
     @RequestMapping("joinCarPooling/{carId}/{inCarMsg:.*}/{QQNum}/{WXNum:.*}/{phoneNum}/{email:.*}")
-    public Map<String,Object> joinCarPooling(HttpSession session,@PathVariable("carId") int carId,@PathVariable("inCarMsg") String inCarMsg,@PathVariable("QQNum") String QQNum,@PathVariable("WXNum") String WXNum,@PathVariable("phoneNum") String phoneNum,@PathVariable("email") String email) throws ParameterError {
+    public Map<String,Object> joinCarPooling(HttpSession session,@PathVariable("carId") int carId,@PathVariable("inCarMsg") String inCarMsg,@PathVariable("QQNum") String QQNum,@PathVariable("WXNum") String WXNum,@PathVariable("phoneNum") String phoneNum,@PathVariable("email") String email) throws ParameterErrorException {
         return carPoolingServices.joinCarPooling(session,carId,inCarMsg,QQNum,WXNum,phoneNum,email);
     }
+
+    /**
+     * 查看详细拼车信息
+     *      ————如果没有加入拼车，相应信息会进行保密处理
+     *      ————如果加入拼车，相应信息会进行展示
+     * @param carId
+     * @return
+     */
+    @RequestMapping("findDetailCarPooling/{carId}")
+    public Map<String,Object> findMyDetailCarPooling(HttpSession session,int carId){
+        return carPoolingServices.findMyDetailCarPooling( session, carId);
+    }
+
+    /**
+     * 退出拼车
+     * @param carId
+     * @return
+     */
+    @RequestMapping("quitCarPooling/{carId}")
+    public Map<String,Object> quitCarPooling(HttpSession session,int carId) throws ParameterErrorException {
+        return carPoolingServices.quitCarPooling(session,carId);
+    }
+
 
 }

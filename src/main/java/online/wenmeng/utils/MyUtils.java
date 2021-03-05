@@ -255,4 +255,5 @@ public class MyUtils {
     public static String dateFormat(Date date, String PatternDate){
         return new SimpleDateFormat(PatternDate).format(date);
     }
+
 }

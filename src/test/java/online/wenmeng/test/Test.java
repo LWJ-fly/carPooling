@@ -42,4 +42,27 @@ public class Test {
         JSONObject json = JSON.parseObject(request);
         System.out.println(json);
     }
+    @org.junit.Test
+    public void fun11(){
+        String str = "15518064076";
+        String s = hideStrProcessing(str);
+        System.out.println(s);
+    }
+    @org.junit.Test
+    public void fun111(){
+        int i = 0;
+        int ii = 0;
+        Integer j = 0;
+        Integer jj = 0;
+        System.out.println(i==ii);
+        System.out.println(j==jj);
+        System.out.println(j==i);
+        System.out.println(i==j);
+        System.out.println(j.equals(jj));
+        System.out.println(j.equals(i));
+    }
+
+    public String hideStrProcessing(String str){
+        return str.substring(0,3)+"****"+str.substring(str.length()-3,str.length());
+    }
 }

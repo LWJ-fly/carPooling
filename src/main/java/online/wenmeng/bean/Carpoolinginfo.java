@@ -55,6 +55,26 @@ public class Carpoolinginfo {
         this.leavenum = leavenum;
     }
 
+    @Override
+    public String toString() {
+        return "Carpoolinginfo{" +
+                "carid=" + carid +
+                ", userid=" + userid +
+                ", userids='" + userids + '\'' +
+                ", getnum=" + getnum +
+                ", totalnum=" + totalnum +
+                ", starttime=" + starttime +
+                ", endtime=" + endtime +
+                ", readytime=" + readytime +
+                ", gotime=" + gotime +
+                ", readyplace='" + readyplace + '\'' +
+                ", goplace='" + goplace + '\'' +
+                ", limit=" + limit +
+                ", state=" + state +
+                ", leavenum='" + leavenum + '\'' +
+                '}';
+    }
+
     public Integer getCarid() {
         return carid;
     }
