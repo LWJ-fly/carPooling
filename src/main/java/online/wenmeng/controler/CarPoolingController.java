@@ -102,8 +102,8 @@ public class CarPoolingController {
      * @param email 拼车结果通知邮箱——为空则为null
      * @return 返回拼车状态
      */
-    @RequestMapping("createCarPooling/{origin}/{bourn}/{readyTime}/{GoTime}/{totalNum}/{getNum}/{inCarMsg:.*}/{QQNum}/{WXNum:.*}/{phoneNum}/{email:.*}")
-    public Map<String,Object> createCarPooling(HttpSession session,@PathVariable("origin") String origin,@PathVariable("bourn") String bourn,@PathVariable("readyTime") long readyTime,@PathVariable("GoTime") long GoTime,@PathVariable("totalNum") int totalNum,@PathVariable("getNum") int getNum,@PathVariable("inCarMsg") String inCarMsg,@PathVariable("QQNum") String QQNum,@PathVariable("WXNum") String WXNum,@PathVariable("phoneNum") String phoneNum,@PathVariable("email") String email) throws ParameterErrorException {
+    @RequestMapping("createCarPooling/{origin}/{bourn}/{readyTime}/{GoTime}/{totalNum}/{getNum}/{inCarMsg:.*}/{QQNum}/{WXNum:.*}/{email:.*}/{phoneNum}")
+    public Map<String,Object> createCarPooling(HttpSession session,@PathVariable("origin") String origin,@PathVariable("bourn") String bourn,@PathVariable("readyTime") long readyTime,@PathVariable("GoTime") long GoTime,@PathVariable("totalNum") int totalNum,@PathVariable("getNum") int getNum,@PathVariable("inCarMsg") String inCarMsg,@PathVariable("QQNum") String QQNum,@PathVariable("WXNum") String WXNum,@PathVariable("email") String email,@PathVariable("phoneNum") String phoneNum) throws ParameterErrorException {
         return carPoolingServices.createCarPooling(session, origin, bourn, readyTime, GoTime, totalNum, getNum, inCarMsg, QQNum, WXNum, phoneNum, email);
     }
 
