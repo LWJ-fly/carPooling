@@ -77,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     carID, userID, userIDS, getNum, totalNum, StartTime, endTime, readyTime, GoTime, 
-    readyPlace, GoPlace, limit, state, LeaveNum
+    readyPlace, GoPlace, LeaveNum
   </sql>
   <select id="selectByExample" parameterType="online.wenmeng.bean.CarpoolinginfoExample" resultMap="BaseResultMap">
     select

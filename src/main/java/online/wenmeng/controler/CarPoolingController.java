@@ -103,7 +103,7 @@ public class CarPoolingController {
      * @return 返回拼车状态
      */
     @RequestMapping("createCarPooling/{origin}/{bourn}/{readyTime:.*}/{GoTime:.*}/{totalNum}/{getNum}/{inCarMsg:.*}/{QQNum}/{WXNum:.*}/{phoneNum}/{email:.*}")
-    public Map<String,Object> createCarPooling(HttpSession session,String origin,String bourn,String readyTime,String GoTime,int totalNum,int getNum,String inCarMsg,String QQNum,String WXNum,String phoneNum,String email) throws ParameterErrorException {
+    public Map<String,Object> createCarPooling(HttpSession session,@PathVariable("origin") String origin,@PathVariable("bourn") String bourn,@PathVariable("readyTime") String readyTime,@PathVariable("GoTime") String GoTime,@PathVariable("totalNum") int totalNum,@PathVariable("getNum") int getNum,@PathVariable("inCarMsg") String inCarMsg,@PathVariable("QQNum") String QQNum,@PathVariable("WXNum") String WXNum,@PathVariable("phoneNum") String phoneNum,@PathVariable("email") String email) throws ParameterErrorException {
         return carPoolingServices.createCarPooling(session, origin, bourn, readyTime, GoTime, totalNum, getNum, inCarMsg, QQNum, WXNum, phoneNum, email);
     }
 
@@ -129,7 +129,7 @@ public class CarPoolingController {
      * @return
      */
     @RequestMapping("findDetailCarPooling/{carId}")
-    public Map<String,Object> findMyDetailCarPooling(HttpSession session,int carId){
+    public Map<String,Object> findMyDetailCarPooling(HttpSession session,@PathVariable("carId") int carId){
         return carPoolingServices.findMyDetailCarPooling( session, carId);
     }
 
@@ -139,7 +139,7 @@ public class CarPoolingController {
      * @return
      */
     @RequestMapping("quitCarPooling/{carId}")
-    public Map<String,Object> quitCarPooling(HttpSession session,int carId) throws ParameterErrorException {
+    public Map<String,Object> quitCarPooling(HttpSession session,@PathVariable("carId") int carId) throws ParameterErrorException {
         return carPoolingServices.quitCarPooling(session,carId);
     }
 
