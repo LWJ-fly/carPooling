@@ -31,6 +31,8 @@ public class UserService {
 
     @Autowired
     private UloginMapper uloginMapper;
+    @Autowired
+    private UInfoService uInfoService;
 
     public Map<String,Object> login(HttpSession session, String code) throws ServerException {
         if (code.length()==32){
@@ -53,7 +55,7 @@ public class UserService {
                     if (ulogin==null){//第一次登录
                         Ulogin insertUlogin = addULogin(openid + "");
                         if (insertUlogin!=null){//添加用户成功
-                            Boolean aBoolean = new UInfoService().insertUInfo(insertUlogin.getUserid(), qqInfo.getString("nickname"), qqInfo.getString("gender").equals("男") ? 1 : 0);
+                            Boolean aBoolean = uInfoService.insertUInfo(insertUlogin.getUserid(), qqInfo.getString("nickname"), qqInfo.getString("gender").equals("男") ? 1 : 0);
                             if (aBoolean){
                                 Map<String, Object> userLoginInfo = MyUtils.createUserLoginInfo(insertUlogin.getUserid(), qqInfo.getString("nickname"), qqInfo.getString("gender"), qqInfo.getString("figureurl_qq_1"));
                                 session.setAttribute(Config.userInfoInRun,userLoginInfo);

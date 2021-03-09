@@ -28,6 +28,8 @@ public class UinACarService {
 
     @Autowired
     private UinacarinfoMapper uinacarinfoMapper;
+    @Autowired
+    private CarPoolingServices carPoolingServices;
 
     public Uinacarinfo insertUinacar(int carId,int userId,String inCarMsg,String qqNum,String wxNum,String phone,String email) throws ParameterErrorException {
         UinacarinfoKey uinacarinfoKey = new UinacarinfoKey();
@@ -74,7 +76,6 @@ public class UinACarService {
         uinacarinfoExample.createCriteria().andUseridEqualTo(openId).andCarstateEqualTo(0+"");
         List<Uinacarinfo> uinacarinfos = uinacarinfoMapper.selectByExample(uinacarinfoExample);
         //获取拼车的信息
-        CarPoolingServices carPoolingServices = new CarPoolingServices();
         List<Carpoolinginfo> carpoolinginfos = new ArrayList<>();
         for (Uinacarinfo c :uinacarinfos) {
             carpoolinginfos.add(carPoolingServices.getCarPoolingInfoByCarId(c.getCarid()));
@@ -90,7 +91,6 @@ public class UinACarService {
         uinacarinfoExample.createCriteria().andUseridEqualTo(openId);
         List<Uinacarinfo> uinacarinfos = uinacarinfoMapper.selectByExample(uinacarinfoExample);
         //获取拼车的信息
-        CarPoolingServices carPoolingServices = new CarPoolingServices();
         List<Carpoolinginfo> carpoolinginfos = new ArrayList<>();
         for (Uinacarinfo c :uinacarinfos) {
             carpoolinginfos.add(carPoolingServices.getCarPoolingInfoByCarId(c.getCarid()));
@@ -146,7 +146,6 @@ public class UinACarService {
         uinacarinfoExample.createCriteria().andUseridEqualTo(openId).andCarstateNotEqualTo(0+"");
         List<Uinacarinfo> uinacarinfos = uinacarinfoMapper.selectByExample(uinacarinfoExample);
         //获取拼车的信息
-        CarPoolingServices carPoolingServices = new CarPoolingServices();
         List<Carpoolinginfo> carpoolinginfos = new ArrayList<>();
         for (Uinacarinfo c :uinacarinfos) {
             carpoolinginfos.add(carPoolingServices.getCarPoolingInfoByCarId(c.getCarid()));

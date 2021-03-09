@@ -13,8 +13,8 @@
     <result column="GoTime" jdbcType="TIMESTAMP" property="gotime" />
     <result column="readyPlace" jdbcType="VARCHAR" property="readyplace" />
     <result column="GoPlace" jdbcType="VARCHAR" property="goplace" />
-    <result column="limit" jdbcType="INTEGER" property="limit" />
-    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="carpoolinglimit" jdbcType="INTEGER" property="carpoolinglimit" />
+    <result column="carpoolingstate" jdbcType="INTEGER" property="carpoolingstate" />
     <result column="LeaveNum" jdbcType="VARCHAR" property="leavenum" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -77,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     carID, userID, userIDS, getNum, totalNum, StartTime, endTime, readyTime, GoTime, 
-    readyPlace, GoPlace, LeaveNum
+    readyPlace, GoPlace, carpoolinglimit, carpoolingstate, LeaveNum
   </sql>
   <select id="selectByExample" parameterType="online.wenmeng.bean.CarpoolinginfoExample" resultMap="BaseResultMap">
     select
@@ -113,13 +113,13 @@
     insert into carpoolinginfo (carID, userID, userIDS, 
       getNum, totalNum, StartTime, 
       endTime, readyTime, GoTime, 
-      readyPlace, GoPlace, limit, 
-      state, LeaveNum)
+      readyPlace, GoPlace, carpoolinglimit, 
+      carpoolingstate, LeaveNum)
     values (#{carid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{userids,jdbcType=VARCHAR}, 
       #{getnum,jdbcType=INTEGER}, #{totalnum,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, 
       #{endtime,jdbcType=TIMESTAMP}, #{readytime,jdbcType=TIMESTAMP}, #{gotime,jdbcType=TIMESTAMP}, 
-      #{readyplace,jdbcType=VARCHAR}, #{goplace,jdbcType=VARCHAR}, #{limit,jdbcType=INTEGER}, 
-      #{state,jdbcType=INTEGER}, #{leavenum,jdbcType=VARCHAR})
+      #{readyplace,jdbcType=VARCHAR}, #{goplace,jdbcType=VARCHAR}, #{carpoolinglimit,jdbcType=INTEGER}, 
+      #{carpoolingstate,jdbcType=INTEGER}, #{leavenum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="online.wenmeng.bean.Carpoolinginfo">
     insert into carpoolinginfo
@@ -157,11 +157,11 @@
       <if test="goplace != null">
         GoPlace,
       </if>
-      <if test="limit != null">
-        limit,
+      <if test="carpoolinglimit != null">
+        carpoolinglimit,
       </if>
-      <if test="state != null">
-        state,
+      <if test="carpoolingstate != null">
+        carpoolingstate,
       </if>
       <if test="leavenum != null">
         LeaveNum,
@@ -201,11 +201,11 @@
       <if test="goplace != null">
         #{goplace,jdbcType=VARCHAR},
       </if>
-      <if test="limit != null">
-        #{limit,jdbcType=INTEGER},
+      <if test="carpoolinglimit != null">
+        #{carpoolinglimit,jdbcType=INTEGER},
       </if>
-      <if test="state != null">
-        #{state,jdbcType=INTEGER},
+      <if test="carpoolingstate != null">
+        #{carpoolingstate,jdbcType=INTEGER},
       </if>
       <if test="leavenum != null">
         #{leavenum,jdbcType=VARCHAR},
@@ -254,11 +254,11 @@
       <if test="record.goplace != null">
         GoPlace = #{record.goplace,jdbcType=VARCHAR},
       </if>
-      <if test="record.limit != null">
-        limit = #{record.limit,jdbcType=INTEGER},
+      <if test="record.carpoolinglimit != null">
+        carpoolinglimit = #{record.carpoolinglimit,jdbcType=INTEGER},
       </if>
-      <if test="record.state != null">
-        state = #{record.state,jdbcType=INTEGER},
+      <if test="record.carpoolingstate != null">
+        carpoolingstate = #{record.carpoolingstate,jdbcType=INTEGER},
       </if>
       <if test="record.leavenum != null">
         LeaveNum = #{record.leavenum,jdbcType=VARCHAR},
@@ -281,8 +281,8 @@
       GoTime = #{record.gotime,jdbcType=TIMESTAMP},
       readyPlace = #{record.readyplace,jdbcType=VARCHAR},
       GoPlace = #{record.goplace,jdbcType=VARCHAR},
-      limit = #{record.limit,jdbcType=INTEGER},
-      state = #{record.state,jdbcType=INTEGER},
+      carpoolinglimit = #{record.carpoolinglimit,jdbcType=INTEGER},
+      carpoolingstate = #{record.carpoolingstate,jdbcType=INTEGER},
       LeaveNum = #{record.leavenum,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -321,11 +321,11 @@
       <if test="goplace != null">
         GoPlace = #{goplace,jdbcType=VARCHAR},
       </if>
-      <if test="limit != null">
-        limit = #{limit,jdbcType=INTEGER},
+      <if test="carpoolinglimit != null">
+        carpoolinglimit = #{carpoolinglimit,jdbcType=INTEGER},
       </if>
-      <if test="state != null">
-        state = #{state,jdbcType=INTEGER},
+      <if test="carpoolingstate != null">
+        carpoolingstate = #{carpoolingstate,jdbcType=INTEGER},
       </if>
       <if test="leavenum != null">
         LeaveNum = #{leavenum,jdbcType=VARCHAR},
@@ -345,8 +345,8 @@
       GoTime = #{gotime,jdbcType=TIMESTAMP},
       readyPlace = #{readyplace,jdbcType=VARCHAR},
       GoPlace = #{goplace,jdbcType=VARCHAR},
-      limit = #{limit,jdbcType=INTEGER},
-      state = #{state,jdbcType=INTEGER},
+      carpoolinglimit = #{carpoolinglimit,jdbcType=INTEGER},
+      carpoolingstate = #{carpoolingstate,jdbcType=INTEGER},
       LeaveNum = #{leavenum,jdbcType=VARCHAR}
     where carID = #{carid,jdbcType=INTEGER}
   </update>

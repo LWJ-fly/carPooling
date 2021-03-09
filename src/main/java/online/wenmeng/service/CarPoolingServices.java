@@ -26,6 +26,8 @@ public class CarPoolingServices {
     @Autowired
     private CarpoolinginfoMapper carpoolinginfoMapper;
 
+    @Autowired
+    private UinACarService uinACarService;
 
     /**
      * 查询当前所有的拼车信息，正在拼车的信息
@@ -34,7 +36,7 @@ public class CarPoolingServices {
     public Map<String, Object> findAllCarPooling() {
         CarpoolinginfoExample carpoolinginfoExample = new CarpoolinginfoExample();
         CarpoolinginfoExample.Criteria criteria = carpoolinginfoExample.createCriteria();
-        criteria.andStateEqualTo(1);
+        criteria.andCarpoolingstateEqualTo(1);
         List<Carpoolinginfo> carpoolinginfos = carpoolinginfoMapper.selectByExample(carpoolinginfoExample);
         return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfos);
     }
@@ -92,7 +94,7 @@ public class CarPoolingServices {
     }
 
 
-    public Map<String, Object> createCarPooling(HttpSession session, String origin, String bourn, String readyTime, String goTime, int totalNum, int getNum, String inCarMsg, String qqNum, String wxNum, String phoneNum, String email) throws ParameterErrorException {
+    public Map<String, Object> createCarPooling(HttpSession session, String origin, String bourn, long readyTime, long goTime, int totalNum, int getNum, String inCarMsg, String qqNum, String wxNum, String phoneNum, String email) throws ParameterErrorException {
         //获取用户的ID
         Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
         int openId = (int) userLoginInfo.get(Config.Openid);
@@ -114,10 +116,9 @@ public class CarPoolingServices {
         int insert = carpoolinginfoMapper.insert(carpoolinginfo);
         if (insert>0){//插入成功
             //同步自己的拼车信息
-            UinACarService uinACarService = new UinACarService();
             Uinacarinfo uinacarinfo = uinACarService.insertUinacar(carPoolingId, openId, inCarMsg, qqNum, wxNum, phoneNum, email);
             if (uinacarinfo!=null){
-                return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfo);
+                return MyUtils.getNewMap(Config.SUCCESS,null,null,findAllCarPooling());
             }
         }
         throw new ParameterErrorException();
@@ -129,7 +130,7 @@ public class CarPoolingServices {
         Map<String, Object> userLoginInfo = (Map<String, Object>) session.getAttribute(Config.userInfoInRun);
         int openId = (int) userLoginInfo.get(Config.Openid);
         Carpoolinginfo carpoolinginfo = carpoolinginfoMapper.selectByPrimaryKey(carId);
-        if (carpoolinginfo!=null&&carpoolinginfo.getState()==1&&!carpoolinginfo.getUserids().contains(openId+"")){//传入的信息正确
+        if (carpoolinginfo!=null&&carpoolinginfo.getCarpoolingstate()==1&&!carpoolinginfo.getUserids().contains(openId+"")){//传入的信息正确
             //更新拼车人数
             carpoolinginfo.setGetnum(carpoolinginfo.getGetnum()-1);
             if (carpoolinginfo.getUserids()!=null&&carpoolinginfo.getUserids().trim().length()>0){
@@ -140,7 +141,6 @@ public class CarPoolingServices {
             int i = carpoolinginfoMapper.updateByPrimaryKeySelective(carpoolinginfo);
             if (i>0){
                 //同步自己的拼车信息
-                UinACarService uinACarService = new UinACarService();
                 Uinacarinfo uinacarinfo = uinACarService.insertUinacar(carpoolinginfo.getCarid(), openId, inCarMsg, qqNum, wxNum, phoneNum, email);
                 if (uinacarinfo!=null){
                     return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfo);
@@ -167,15 +167,14 @@ public class CarPoolingServices {
         //获取到拼车信息
         Carpoolinginfo carpoolinginfo = carpoolinginfoMapper.selectByPrimaryKey(carId);
         //获取到所有的拼车信息
-        UinACarService uinACarService = new UinACarService();
         List<Uinacarinfo> uinacarinfoList = new ArrayList<>();
-        //车主信息
+        //发起拼车人的信息
         uinacarinfoList.add(uinACarService.getUinacarinfoByCarIdAndUserId(carpoolinginfo.getCarid(),carpoolinginfo.getUserid()));
         String[] userIds = carpoolinginfo.getUserids().split(Config.splitUsers);
         for (String userId:userIds) {
             uinacarinfoList.add(uinACarService.getUinacarinfoByCarIdAndUserId(carpoolinginfo.getCarid(), TransitionUtil.transitionType(userId.trim(),int.class)));
         }
-        if (!carpoolinginfo.getUserid().equals(openId)&&!carpoolinginfo.getUserids().contains(""+openId)||carpoolinginfo.getState().equals(Config.carpoolinginfo_end)){//如果不是拼车内的成员,必要信息进行打码处理
+        if (!carpoolinginfo.getUserid().equals(openId)&&!carpoolinginfo.getUserids().contains(""+openId)||carpoolinginfo.getCarpoolingstate().equals(Config.carpoolinginfo_end)){//如果不是拼车内的成员,必要信息进行打码处理
             return MyUtils.getNewMap(Config.SUCCESS,null,carpoolinginfo.toString(),uinACarService.hideUinaCarInfo(uinacarinfoList));
         }
         return MyUtils.getNewMap(Config.SUCCESS,null,carpoolinginfo.toString(),uinacarinfoList);
@@ -196,7 +195,7 @@ public class CarPoolingServices {
             userIdsList.add(TransitionUtil.transitionType(str.trim(),int.class));
         }
 
-        if (userIdsList.contains(openId)&&carpoolinginfo.getState().equals(Config.carpoolinginfo_ing)){//加入拼车了，但是没有拼车完成
+        if (userIdsList.contains(openId)&&carpoolinginfo.getCarpoolingstate().equals(Config.carpoolinginfo_ing)){//加入拼车了，但是没有拼车完成
             carpoolinginfo.setGetnum(carpoolinginfo.getGetnum()+1);
             //将此人移动到历史人物
             String leavenum = carpoolinginfo.getLeavenum();
@@ -209,7 +208,7 @@ public class CarPoolingServices {
                 }else {
                     //只剩一个人，改变拼车状态，并将此人移动到历史人员，并更新自己的信息
                     carpoolinginfo.setUserid(null);
-                    carpoolinginfo.setState(Config.carpoolinginfo_end);
+                    carpoolinginfo.setCarpoolingstate(Config.carpoolinginfo_end);
                     carpoolinginfo.setEndtime(new Date());
                 }
             }else {
@@ -228,7 +227,6 @@ public class CarPoolingServices {
             int i = carpoolinginfoMapper.updateByPrimaryKey(carpoolinginfo);
             if (i>0){
                 //更新自己的信息
-                UinACarService uinACarService = new UinACarService();
                 Boolean aBoolean = uinACarService.setUinacarinfo2LeaveByCarIdAndUserId(carpoolinginfo.getCarid(), openId);
                 if (aBoolean){
                     return MyUtils.getNewMap(Config.SUCCESS,Config.RETRY,null,carpoolinginfo);

@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import online.wenmeng.utils.HttpsRequest;
 
+import java.util.Date;
+
 /**
  * @Auther: 狼芒
  * @Date: 2020/12/6 9:58
@@ -46,7 +48,7 @@ public class Test {
     public void fun11(){
         String str = "15518064076";
         String s = hideStrProcessing(str);
-        System.out.println(s);
+        System.out.println(new Date().getTime());
     }
     @org.junit.Test
     public void fun111(){

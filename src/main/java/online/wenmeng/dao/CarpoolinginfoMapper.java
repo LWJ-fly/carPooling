@@ -3,10 +3,9 @@ package online.wenmeng.dao;
 import online.wenmeng.bean.Carpoolinginfo;
 import online.wenmeng.bean.CarpoolinginfoExample;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
+
 public interface CarpoolinginfoMapper {
     long countByExample(CarpoolinginfoExample example);
 

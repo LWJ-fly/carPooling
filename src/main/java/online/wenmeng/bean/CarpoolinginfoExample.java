@@ -795,123 +795,123 @@ public class CarpoolinginfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andLimitIsNull() {
-            addCriterion("limit is null");
+        public Criteria andCarpoolinglimitIsNull() {
+            addCriterion("carpoolinglimit is null");
             return (Criteria) this;
         }
 
-        public Criteria andLimitIsNotNull() {
-            addCriterion("limit is not null");
+        public Criteria andCarpoolinglimitIsNotNull() {
+            addCriterion("carpoolinglimit is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLimitEqualTo(Integer value) {
-            addCriterion("limit =", value, "limit");
+        public Criteria andCarpoolinglimitEqualTo(Integer value) {
+            addCriterion("carpoolinglimit =", value, "carpoolinglimit");
             return (Criteria) this;
         }
 
-        public Criteria andLimitNotEqualTo(Integer value) {
-            addCriterion("limit <>", value, "limit");
+        public Criteria andCarpoolinglimitNotEqualTo(Integer value) {
+            addCriterion("carpoolinglimit <>", value, "carpoolinglimit");
             return (Criteria) this;
         }
 
-        public Criteria andLimitGreaterThan(Integer value) {
-            addCriterion("limit >", value, "limit");
+        public Criteria andCarpoolinglimitGreaterThan(Integer value) {
+            addCriterion("carpoolinglimit >", value, "carpoolinglimit");
             return (Criteria) this;
         }
 
-        public Criteria andLimitGreaterThanOrEqualTo(Integer value) {
-            addCriterion("limit >=", value, "limit");
+        public Criteria andCarpoolinglimitGreaterThanOrEqualTo(Integer value) {
+            addCriterion("carpoolinglimit >=", value, "carpoolinglimit");
             return (Criteria) this;
         }
 
-        public Criteria andLimitLessThan(Integer value) {
-            addCriterion("limit <", value, "limit");
+        public Criteria andCarpoolinglimitLessThan(Integer value) {
+            addCriterion("carpoolinglimit <", value, "carpoolinglimit");
             return (Criteria) this;
         }
 
-        public Criteria andLimitLessThanOrEqualTo(Integer value) {
-            addCriterion("limit <=", value, "limit");
+        public Criteria andCarpoolinglimitLessThanOrEqualTo(Integer value) {
+            addCriterion("carpoolinglimit <=", value, "carpoolinglimit");
             return (Criteria) this;
         }
 
-        public Criteria andLimitIn(List<Integer> values) {
-            addCriterion("limit in", values, "limit");
+        public Criteria andCarpoolinglimitIn(List<Integer> values) {
+            addCriterion("carpoolinglimit in", values, "carpoolinglimit");
             return (Criteria) this;
         }
 
-        public Criteria andLimitNotIn(List<Integer> values) {
-            addCriterion("limit not in", values, "limit");
+        public Criteria andCarpoolinglimitNotIn(List<Integer> values) {
+            addCriterion("carpoolinglimit not in", values, "carpoolinglimit");
             return (Criteria) this;
         }
 
-        public Criteria andLimitBetween(Integer value1, Integer value2) {
-            addCriterion("limit between", value1, value2, "limit");
+        public Criteria andCarpoolinglimitBetween(Integer value1, Integer value2) {
+            addCriterion("carpoolinglimit between", value1, value2, "carpoolinglimit");
             return (Criteria) this;
         }
 
-        public Criteria andLimitNotBetween(Integer value1, Integer value2) {
-            addCriterion("limit not between", value1, value2, "limit");
+        public Criteria andCarpoolinglimitNotBetween(Integer value1, Integer value2) {
+            addCriterion("carpoolinglimit not between", value1, value2, "carpoolinglimit");
             return (Criteria) this;
         }
 
-        public Criteria andStateIsNull() {
-            addCriterion("state is null");
+        public Criteria andCarpoolingstateIsNull() {
+            addCriterion("carpoolingstate is null");
             return (Criteria) this;
         }
 
-        public Criteria andStateIsNotNull() {
-            addCriterion("state is not null");
+        public Criteria andCarpoolingstateIsNotNull() {
+            addCriterion("carpoolingstate is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStateEqualTo(Integer value) {
-            addCriterion("state =", value, "state");
+        public Criteria andCarpoolingstateEqualTo(Integer value) {
+            addCriterion("carpoolingstate =", value, "carpoolingstate");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotEqualTo(Integer value) {
-            addCriterion("state <>", value, "state");
+        public Criteria andCarpoolingstateNotEqualTo(Integer value) {
+            addCriterion("carpoolingstate <>", value, "carpoolingstate");
             return (Criteria) this;
         }
 
-        public Criteria andStateGreaterThan(Integer value) {
-            addCriterion("state >", value, "state");
+        public Criteria andCarpoolingstateGreaterThan(Integer value) {
+            addCriterion("carpoolingstate >", value, "carpoolingstate");
             return (Criteria) this;
         }
 
-        public Criteria andStateGreaterThanOrEqualTo(Integer value) {
-            addCriterion("state >=", value, "state");
+        public Criteria andCarpoolingstateGreaterThanOrEqualTo(Integer value) {
+            addCriterion("carpoolingstate >=", value, "carpoolingstate");
             return (Criteria) this;
         }
 
-        public Criteria andStateLessThan(Integer value) {
-            addCriterion("state <", value, "state");
+        public Criteria andCarpoolingstateLessThan(Integer value) {
+            addCriterion("carpoolingstate <", value, "carpoolingstate");
             return (Criteria) this;
         }
 
-        public Criteria andStateLessThanOrEqualTo(Integer value) {
-            addCriterion("state <=", value, "state");
+        public Criteria andCarpoolingstateLessThanOrEqualTo(Integer value) {
+            addCriterion("carpoolingstate <=", value, "carpoolingstate");
             return (Criteria) this;
         }
 
-        public Criteria andStateIn(List<Integer> values) {
-            addCriterion("state in", values, "state");
+        public Criteria andCarpoolingstateIn(List<Integer> values) {
+            addCriterion("carpoolingstate in", values, "carpoolingstate");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotIn(List<Integer> values) {
-            addCriterion("state not in", values, "state");
+        public Criteria andCarpoolingstateNotIn(List<Integer> values) {
+            addCriterion("carpoolingstate not in", values, "carpoolingstate");
             return (Criteria) this;
         }
 
-        public Criteria andStateBetween(Integer value1, Integer value2) {
-            addCriterion("state between", value1, value2, "state");
+        public Criteria andCarpoolingstateBetween(Integer value1, Integer value2) {
+            addCriterion("carpoolingstate between", value1, value2, "carpoolingstate");
             return (Criteria) this;
         }
 
-        public Criteria andStateNotBetween(Integer value1, Integer value2) {
-            addCriterion("state not between", value1, value2, "state");
+        public Criteria andCarpoolingstateNotBetween(Integer value1, Integer value2) {
+            addCriterion("carpoolingstate not between", value1, value2, "carpoolingstate");
             return (Criteria) this;
         }
 

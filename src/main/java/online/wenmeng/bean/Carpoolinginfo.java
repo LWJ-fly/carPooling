@@ -1,8 +1,5 @@
 package online.wenmeng.bean;
 
-import online.wenmeng.config.Config;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
 public class Carpoolinginfo {
@@ -16,29 +13,25 @@ public class Carpoolinginfo {
 
     private Integer totalnum;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date starttime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+
     private Date endtime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+
     private Date readytime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+
     private Date gotime;
 
     private String readyplace;
 
     private String goplace;
 
-    private Integer limit;
+    private Integer carpoolinglimit;
 
-    private Integer state;
+    private Integer carpoolingstate;
 
     private String leavenum;
 
-    public Carpoolinginfo() {
-    }
-
-    public Carpoolinginfo(Integer carid, Integer userid, String userids, Integer getnum, Integer totalnum, Date starttime, Date endtime, Date readytime, Date gotime, String readyplace, String goplace, Integer limit, Integer state, String leavenum) {
+    public Carpoolinginfo(Integer carid, Integer userid, String userids, Integer getnum, Integer totalnum, Date starttime, Date endtime, Date readytime, Date gotime, String readyplace, String goplace, Integer carpoolinglimit, Integer carpoolingstate, String leavenum) {
         this.carid = carid;
         this.userid = userid;
         this.userids = userids;
@@ -50,29 +43,9 @@ public class Carpoolinginfo {
         this.gotime = gotime;
         this.readyplace = readyplace;
         this.goplace = goplace;
-        this.limit = limit;
-        this.state = state;
+        this.carpoolinglimit = carpoolinglimit;
+        this.carpoolingstate = carpoolingstate;
         this.leavenum = leavenum;
-    }
-
-    @Override
-    public String toString() {
-        return "Carpoolinginfo{" +
-                "carid=" + carid +
-                ", userid=" + userid +
-                ", userids='" + userids + '\'' +
-                ", getnum=" + getnum +
-                ", totalnum=" + totalnum +
-                ", starttime=" + starttime +
-                ", endtime=" + endtime +
-                ", readytime=" + readytime +
-                ", gotime=" + gotime +
-                ", readyplace='" + readyplace + '\'' +
-                ", goplace='" + goplace + '\'' +
-                ", limit=" + limit +
-                ", state=" + state +
-                ", leavenum='" + leavenum + '\'' +
-                '}';
     }
 
     public Integer getCarid() {
@@ -163,20 +136,20 @@ public class Carpoolinginfo {
         this.goplace = goplace == null ? null : goplace.trim();
     }
 
-    public Integer getLimit() {
-        return limit;
+    public Integer getCarpoolinglimit() {
+        return carpoolinglimit;
     }
 
-    public void setLimit(Integer limit) {
-        this.limit = limit;
+    public void setCarpoolinglimit(Integer carpoolinglimit) {
+        this.carpoolinglimit = carpoolinglimit;
     }
 
-    public Integer getState() {
-        return state;
+    public Integer getCarpoolingstate() {
+        return carpoolingstate;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setCarpoolingstate(Integer carpoolingstate) {
+        this.carpoolingstate = carpoolingstate;
     }
 
     public String getLeavenum() {
