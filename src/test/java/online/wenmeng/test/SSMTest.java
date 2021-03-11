@@ -1,5 +1,9 @@
 package online.wenmeng.test;
 
+import online.wenmeng.bean.Ulogin;
+import online.wenmeng.dao.UinfoMapper;
+import online.wenmeng.dao.UloginMapper;
+import online.wenmeng.utils.MyUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +21,27 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class SSMTest {
 
 
+    @Autowired
+    private UloginMapper uloginMapper;
+
     @Test
     public void fun(){
 
+        Ulogin ulogin = uloginMapper.selectByPrimaryKey(481440971);
+        System.out.println(ulogin.toString());
     }
 
 
     @Test
     public void fun1(){
-        //由openID获取用户信息、果然用户的信息不是说访问就访问的
-        String code = "C498D670880E2EDC1EA268F29DF553C8";
-//        String s = userLoginService.qqLogin(code);
-        System.out.println(code);
+
+        String name = "123";
+        Ulogin ulogin = new Ulogin();
+        ulogin.setUserid(MyUtils.getRandomNum());
+        ulogin.setQqlogin(name);
+        ulogin.setUsable(1);
+        int i = uloginMapper.insertTest(ulogin);
+        System.out.println(i);
     }
 
     @Test

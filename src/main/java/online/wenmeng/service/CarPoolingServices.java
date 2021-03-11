@@ -107,12 +107,8 @@ public class CarPoolingServices {
             }
         }
         Carpoolinginfo carpoolinginfo = null;
-        try {
-            //创建用户拼车信息
-            carpoolinginfo = new Carpoolinginfo(carPoolingId,openId,null,getNum,totalNum,new Date(),null,new Date(readyTime),new Date(goTime),origin,bourn,null,1,null);
-        } catch (Exception e) {
-            throw new ParameterErrorException();
-        }
+        //创建用户拼车信息
+        carpoolinginfo = new Carpoolinginfo(carPoolingId,openId,null,getNum,totalNum,new Date(),null,new Date(readyTime),new Date(goTime),origin,bourn,null,1,null);
         int insert = carpoolinginfoMapper.insert(carpoolinginfo);
         if (insert>0){//插入成功
             //同步自己的拼车信息
