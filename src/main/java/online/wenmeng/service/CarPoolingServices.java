@@ -52,7 +52,7 @@ public class CarPoolingServices {
     public Map<String, Object> findCarPoolingByLikeOrigin(String origin) {
         CarpoolinginfoExample carpoolinginfoExample = new CarpoolinginfoExample();
         CarpoolinginfoExample.Criteria criteria = carpoolinginfoExample.createCriteria();
-        criteria.andReadyplaceLike(origin);
+        criteria.andReadyplaceLike("%"+origin+"%");
         List<Carpoolinginfo> carpoolinginfos = carpoolinginfoMapper.selectByExample(carpoolinginfoExample);
         return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfos);
     }
@@ -69,7 +69,7 @@ public class CarPoolingServices {
     public Map<String, Object> findCarPoolingByLikeBourn(String bourn) {
         CarpoolinginfoExample carpoolinginfoExample = new CarpoolinginfoExample();
         CarpoolinginfoExample.Criteria criteria = carpoolinginfoExample.createCriteria();
-        criteria.andGoplaceLike(bourn);
+        criteria.andGoplaceLike("%"+bourn+"%");
         List<Carpoolinginfo> carpoolinginfos = carpoolinginfoMapper.selectByExample(carpoolinginfoExample);
         return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfos);
     }
@@ -87,8 +87,8 @@ public class CarPoolingServices {
     public Map<String, Object> findCarPoolingByLikeTrip(String origin, String bourn) {
         CarpoolinginfoExample carpoolinginfoExample = new CarpoolinginfoExample();
         CarpoolinginfoExample.Criteria criteria = carpoolinginfoExample.createCriteria();
-        criteria.andReadyplaceLike(origin);
-        criteria.andGoplaceLike(bourn);
+        criteria.andReadyplaceLike("%"+origin+"%");
+        criteria.andGoplaceLike("%"+bourn+"%");
         List<Carpoolinginfo> carpoolinginfos = carpoolinginfoMapper.selectByExample(carpoolinginfoExample);
         return MyUtils.getNewMap(Config.SUCCESS,null,null,carpoolinginfos);
     }

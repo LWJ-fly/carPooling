@@ -28,20 +28,13 @@ public class SSMTest {
     public void fun(){
 
         Ulogin ulogin = uloginMapper.selectByPrimaryKey(481440971);
-        System.out.println(ulogin.toString());
+        System.out.println(ulogin);
     }
 
 
     @Test
     public void fun1(){
 
-        String name = "123";
-        Ulogin ulogin = new Ulogin();
-        ulogin.setUserid(MyUtils.getRandomNum());
-        ulogin.setQqlogin(name);
-        ulogin.setUsable(1);
-        int i = uloginMapper.insertTest(ulogin);
-        System.out.println(i);
     }
 
     @Test

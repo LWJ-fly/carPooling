@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : MySQL
+ Source Server         : aliyun_mysql
  Source Server Type    : MySQL
- Source Server Version : 80013
+ Source Server Version : 50637
  Source Host           : localhost:3306
  Source Schema         : carpooling
 
  Target Server Type    : MySQL
- Target Server Version : 80013
+ Target Server Version : 50637
  File Encoding         : 65001
 
- Date: 02/03/2021 00:38:32
+ Date: 14/03/2021 19:10:07
 */
 
 SET NAMES utf8mb4;
@@ -33,14 +33,11 @@ CREATE TABLE `carpoolinginfo`  (
   `GoTime` datetime(6) NULL DEFAULT NULL COMMENT '最晚出发的时间',
   `readyPlace` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '拼车的始发地',
   `GoPlace` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '拼车的目的地',
-  `limit` int(10) NULL DEFAULT NULL COMMENT '拼车的限制，1、2、4、8制度',
-  `state` int(10) NULL DEFAULT NULL COMMENT '拼车状态，拼成or未拼成',
+  `carpoolinglimit` int(10) NULL DEFAULT NULL COMMENT '拼车的限制，1、2、4、8制度',
+  `carpoolingstate` int(10) NULL DEFAULT NULL COMMENT '拼车状态，拼成or未拼成',
   `LeaveNum` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '用户历史的记录，被请出的or自动离开的',
-  PRIMARY KEY (`carID`) USING BTREE,
-  INDEX `userID`(`userID`) USING BTREE,
-  INDEX `carID`(`carID`) USING BTREE,
-  CONSTRAINT `carpoolinginfo_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `ulogin` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '拼车的信息，每次发起的拼车都可以在这里查看' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`carID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '拼车的信息，每次发起的拼车都可以在这里查看' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for uinacarinfo
@@ -57,14 +54,8 @@ CREATE TABLE `uinacarinfo`  (
   `WXNum` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '用户暴露的微信账号，没有则为空',
   `phoneNum` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '用户暴露的手机号账号，没有则为空',
   `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '用来通知用户的邮箱，没有则为空',
-  PRIMARY KEY (`carID`, `userID`) USING BTREE,
-  INDEX `userID`(`userID`) USING BTREE,
-  INDEX `userID_2`(`userID`) USING BTREE,
-  INDEX `userID_3`(`userID`) USING BTREE,
-  INDEX `carID`(`carID`) USING BTREE,
-  CONSTRAINT `uinacarinfo_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `ulogin` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `uinacarinfo_ibfk_3` FOREIGN KEY (`carID`) REFERENCES `carpoolinginfo` (`carid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '用户的拼车信息，保存用户的每次拼车信息，主键由个人ID与拼车ID组合而成' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`carID`, `userID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '用户的拼车信息，保存用户的每次拼车信息，主键由个人ID与拼车ID组合而成' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for uinfo
@@ -83,9 +74,8 @@ CREATE TABLE `uinfo`  (
   `signature` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '用户的个人说明',
   `UWallet` double(255, 0) NULL DEFAULT NULL COMMENT '用户的钱包',
   `UCredibility` int(10) NULL DEFAULT NULL COMMENT '用户的信誉值，用来记录用户的信誉',
-  PRIMARY KEY (`userID`) USING BTREE,
-  CONSTRAINT `uinfo_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `ulogin` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '保存用户的信息，保存用户常用的信息' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`userID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '保存用户的信息，保存用户常用的信息' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for ulogin
@@ -100,14 +90,7 @@ CREATE TABLE `ulogin`  (
   `zhLogin` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '本地账号登录',
   `zhPwd` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '本地密码登录',
   `usable` int(5) NOT NULL COMMENT '是否可用，1 可用，0不可用',
-  PRIMARY KEY (`userID`) USING BTREE,
-  INDEX `userID`(`userID`) USING BTREE,
-  INDEX `userID_2`(`userID`) USING BTREE,
-  INDEX `userID_3`(`userID`) USING BTREE,
-  INDEX `userID_4`(`userID`) USING BTREE,
-  INDEX `userID_5`(`userID`) USING BTREE,
-  INDEX `userID_6`(`userID`) USING BTREE,
-  INDEX `userID_7`(`userID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '用户登录的字段，只保存用户登录的信息' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`userID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '用户登录的字段，只保存用户登录的信息' ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
